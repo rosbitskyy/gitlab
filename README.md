@@ -30,6 +30,7 @@ First install [Node.js](https://nodejs.org/uk)
 npm i gitlab-restapi
 ```
 
+An example of receiving a list of tasks divided into pages with the specified status
 ```javascript
 const GitLab = require("gitlab-restapi");
 const gitLab = new GitLab.API(new GitLab.Options({
@@ -37,7 +38,10 @@ const gitLab = new GitLab.API(new GitLab.Options({
     projectId: process.env.GIT_PID,
 }));
 
-const jobs = await gitLab.Jobs.jobs(new GitLab.PaginateParams({page: 1, per_page: 100, scope: ['success', '']}));
+const jobs = await gitLab.Jobs.jobs(
+    new GitLab.PaginateParams({
+        page: 1, per_page: 100, scope: ['success', 'failed']
+    }));
 // find first(last executed) Job by name
 const job = jobs.find({name: 'testofclasses'});
 console.log(job.status)
