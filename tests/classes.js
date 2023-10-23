@@ -21,6 +21,9 @@ const AbstractProperties = require("../src/GitLab/AbstractProperties");
         it('Jobs instanceof GitLab.Jobs', () => {
             assert.strictEqual(jobs instanceof GitLab.Jobs, true);
         })
+        it('Jobs instanceof AbstractProperties', () => {
+            assert.strictEqual(jobs instanceof AbstractProperties, true);
+        })
         it('Jobs count 2', () => {
             assert.strictEqual(jobs.list.length, 2);
         })
