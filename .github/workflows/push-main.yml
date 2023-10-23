@@ -1,0 +1,34 @@
+name: Push to Main branche
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/push-main.yml'
+      - 'package.json'
+      - 'index.js'
+      - 'src/**'
+      - 'tests/**'
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  no_replica_and_replicaset:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [ 16, 18, 20 ]
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
+    name: Node ${{ matrix.node }} OS ${{ matrix.os }} ${{ matrix.test }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install --package-lock-only
+      - run: npm ci
+      - run: npm run test
