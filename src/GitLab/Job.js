@@ -29,6 +29,10 @@ class Job extends AbstractProperties {
         'manual': '⏳',
     }
 
+    get statuses() {
+        return Object.keys(this.#statuses)
+    }
+
     /**
      * @param {Job|Object} props
      */

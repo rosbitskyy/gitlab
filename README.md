@@ -60,4 +60,33 @@ const gitLab = new GitLab.API(new GitLab.Options({
 console.log(gitLab.Jobs.uri)
 ```
 
+Get a single job of a project
+```javascript
+const jobs = await gitLab.Jobs.jobs(new GitLab.PaginateParams({page: 1, per_page: 1, scope: ['success']}));
+// const jobs = await gitLab.Jobs.jobs(new GitLab.PaginateParams({})); // page: 1, per_page: 20, all scopes
+// const jobs = await gitLab.Jobs.jobs(); // page: 1, per_page: 20, all scopes
+console.log('jobs:', jobs.list)
+const _job = jobs.find({status: 'success'});
+console.log('found:', _job)
+const job = await gitLab.Jobs.job(_job.id);
+console.log('Get a single job of a project by id:', job)
+```
+
+Erase a single job of a project (remove job artifacts and a job log)
+```javascript
+const jobs = await gitLab.Jobs.jobs(new GitLab.PaginateParams({
+    page: 1,
+    per_page: 100,
+    scope: ['failed', 'canceled']
+}));
+const erasedJobs = new GitLab.Jobs([])
+for (let job of jobs.list) {
+    if (job.artifacts && job.artifacts.length) {
+        const obj = await gitLab.Jobs.erase(job.id);
+        if (obj) erasedJobs.push(obj)
+    }
+}
+console.log(erasedJobs.list)
+```
+
 Thanks for your attention - the continuation of the api will come soon
