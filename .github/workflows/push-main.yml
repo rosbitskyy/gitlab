@@ -16,7 +16,7 @@ permissions:
   checks: write
 
 jobs:
-  no_replica_and_replicaset:
+  testofclasses:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
