@@ -19,14 +19,21 @@ const {strict: assert} = require("node:assert");
     }));
     console.log(gitLab.Jobs.uri)
 
-    const jobs = await gitLab.Jobs.jobs(new GitLab.PaginateParams({page: 1, per_page: 1, scope: ['success']}));
+    const jobs = await gitLab.Jobs.jobs(new GitLab.PaginateParams({page: 1, per_page: 100,}));
+    const erasedJobs = new GitLab.Jobs([])
+    for (let job of jobs.list) {
+        if (job.artifacts && job.artifacts.length) {
+            const obj = await gitLab.Jobs.erase(job.id);
+            if (obj) erasedJobs.push(obj)
+        }
+    }
 
     describe('New Jobs class', () => {
         it('Jobs instanceof GitLab.Jobs', () => {
             assert.strictEqual(jobs instanceof GitLab.Jobs, true);
         })
-        it('Jobs count is 1', () => {
-            assert.strictEqual(jobs.list.length, 1);
+        it('Jobs count', () => {
+            assert.strictEqual(jobs.list.length > 1, true);
         })
         it('Jobs status is `success`', () => {
             assert.strictEqual(jobs.find({status: 'success'}).status, 'success');
