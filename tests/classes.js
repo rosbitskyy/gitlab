@@ -12,6 +12,7 @@ const GitLab = require("../src");
 const {describe, it} = require("node:test");
 const {strict: assert} = require("node:assert");
 const AbstractProperties = require("../src/GitLab/AbstractProperties");
+
 (async () => {
 
     const jobs = new GitLab.Jobs(variables.jobs)
@@ -24,7 +25,8 @@ const AbstractProperties = require("../src/GitLab/AbstractProperties");
             assert.strictEqual(jobs.list.length, 2);
         })
         it('Jobs has own properties from AbstractList and AbstractProperties', () => {
-            const props = new Set(jobs.getOwnPropertyOf(new GitLab.AbstractList()).concat(jobs.getOwnPropertyOf(new GitLab.AbstractProperties())))
+            const props = new Set(jobs.getOwnPropertyOf(new GitLab.AbstractList())
+                .concat(jobs.getOwnPropertyOf(new AbstractProperties())))
             const jp = jobs.getOwnPropertyOf(jobs)
             assert.strictEqual(props.size, jp.length);
         })
