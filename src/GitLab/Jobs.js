@@ -17,14 +17,14 @@ class Jobs extends AbstractProperties {
     /**
      * @type {[AbstractList]}
      */
-    jobs = new AbstractList()
+    #jobs = new AbstractList()
 
     /**
-     * @param {Jobs} jobs
+     * @param {[]|AbstractList|Jobs} jobs
      */
     constructor(jobs) {
         super();
-        this.setProperties(new AbstractList(jobs), this.jobs, false, Job)
+        this.setProperties(new AbstractList(jobs), this.#jobs, false, Job)
     }
 
     /**
@@ -32,7 +32,11 @@ class Jobs extends AbstractProperties {
      * @return {Job}
      */
     find(filter) {
-        return this.jobs.findOne(filter)
+        return this.#jobs.findOne(filter)
+    }
+
+    get list() {
+        return this.#jobs
     }
 }
 

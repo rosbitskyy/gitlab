@@ -13,17 +13,47 @@ class AbstractProperties {
      * @param {Object|Array} source
      * @param {Object|Array} target
      * @param {boolean|true} ownPropertyOnly
-     * @param {null|Function|Job} Class
+     * @param {null|Function|Job|Object} Class
      */
     setProperties(source, target, ownPropertyOnly = true, Class = null) {
         if (Class && (source instanceof Array && target instanceof Array)) for (let v of source)
             target.push(new Class(v))
         else for (let key of Object.keys(source)) if (!ownPropertyOnly || target.hasOwnProperty(key)) target[key] = source[key];
+        this.copyProperties(target)
     }
 
-    formatDate = (d) => {
+    formatDate = (d, lang = 'en') => {
         const v = new Date(d);
-        return v.toLocaleDateString('uk') + ' ' + v.toLocaleTimeString('uk')
+        return v.toLocaleDateString(lang) + ' ' + v.toLocaleTimeString(lang)
+    }
+
+    /**
+     * @param {any} obj
+     * @return {any[]}
+     */
+    getOwnPropertyOf = (obj) => {
+        let properties = new Set()
+        let currentObj = obj
+        do {
+            Object.getOwnPropertyNames(currentObj).map(item => properties.add(item))
+        } while ((currentObj = Object.getPrototypeOf(currentObj)))
+        return [...properties.keys()].filter(item => typeof obj[item] === 'function' &&
+            !['constructor', 'hasOwnProperty', 'isPrototypeOf'].includes(item) && !item.startsWith("__"))
+    }
+
+    /**
+     * @param {any} source
+     */
+    copyProperties(source) {
+        const ownProperties = this.getOwnPropertyOf(this)
+        this.getOwnPropertyOf(source).filter(it => !ownProperties.includes(it)).map(it => {
+            Object.defineProperty(this, it, {
+                writable: false,
+                value: function (...args) {
+                    return source[it](...args);
+                }
+            })
+        })
     }
 }
 

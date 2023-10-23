@@ -24,6 +24,7 @@
     "node-fetch": "^2.6.1"
   },
   "scripts": {
-    "test": "echo test"
+    "test": "npm run test:classes",
+    "test:classes": "node tests/classes.js"
   }
 }
