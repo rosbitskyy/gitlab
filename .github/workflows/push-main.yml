@@ -32,3 +32,6 @@ jobs:
       - run: npm install --package-lock-only
       - run: npm ci
       - run: npm run test
+        env:
+          GIT_TOKEN: ${{secrets.git_token}}
+          GIT_PID: ${{secrets.git_pid}}
