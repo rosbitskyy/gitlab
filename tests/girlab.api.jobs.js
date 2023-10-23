@@ -19,7 +19,7 @@ const {strict: assert} = require("node:assert");
     }));
     console.log(gitLab.Jobs.uri)
 
-    const jobs = await gitLab.Jobs.jobs(new GitLab.PaginateParams({page: 1, per_page: 100,}));
+    const jobs = await gitLab.Jobs.jobs(new GitLab.PaginateParams({page: 2, per_page: 20}));
     const erasedJobs = new GitLab.Jobs([])
     for (let job of jobs.list) {
         if (job.artifacts && job.artifacts.length) {
@@ -27,6 +27,7 @@ const {strict: assert} = require("node:assert");
             if (obj) erasedJobs.push(obj)
         }
     }
+    console.log('erased:', erasedJobs.list)
 
     describe('New Jobs class', () => {
         it('Jobs instanceof GitLab.Jobs', () => {

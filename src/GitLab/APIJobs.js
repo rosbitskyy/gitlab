@@ -69,17 +69,24 @@ class APIJobs {
                         const Class = spec.class || Object;
                         let id = args.length > 0 ? args[0] : null;
                         let params = args.length > 1 ? args[1] : null;
-                        const switchIt = (v)=> {
+                        let body = null;
+                        const switchIt = (v) => {
                             params = v;
                             id = null;
                         }
                         if (id && id instanceof PaginateParams) switchIt(id);
                         else if (id && id.constructor === {}.constructor) switchIt(new PaginateParams(id));
-                        else if (params && params.constructor === {}.constructor) params = new PaginateParams(params)
-                        else if (!params && !id && Class === Jobs) params = new PaginateParams({})
+                        else if (params && params.constructor === {}.constructor && spec.method === 'post') body = params;
+                        else if (!params && !id && Class === Jobs && spec.method === 'get') params = new PaginateParams({})
                         const url = (id ? spec.url(id) : spec.url()) + ((Class === Jobs) ? params.toString() : '');
-                        const response = await this.request[spec.method](url);
+                        const _args = [url];
+                        if (body) _args.push(body);
+                        const response = await this.request[spec.method](..._args);
                         if (response.ok) return new Class(await response.json());
+                        else {
+                            const e = await response.json();
+                            console.error('WARNING:', e.message)
+                        }
                     } catch (e) {
                         throw new GitLabError(this.api, e.message, e.stack)
                     }
