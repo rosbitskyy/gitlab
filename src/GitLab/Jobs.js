@@ -9,13 +9,14 @@
  */
 
 const Responses = require("./Responses");
+const Job = require("./Job");
 
 class Jobs extends Responses {
     /**
      * @param {[]|AbstractList} v
      */
     constructor(v) {
-        super(v);
+        super(v, Job);
     }
 }
 

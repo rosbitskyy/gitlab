@@ -53,7 +53,7 @@ const Method = require("../src/GitLab/Method");
             assert.strictEqual(jobs.find({name: "rspec:other"}).id, 6);
         })
         it('Job instanceof GitLab.Response', () => {
-            assert.strictEqual(jobs.find({name: "rspec:other"}) instanceof GitLab.Response, true);
+            assert.strictEqual(jobs.find({name: "rspec:other"}) instanceof GitLab.Job, true);
         })
     })
 

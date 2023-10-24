@@ -37,8 +37,18 @@ class AbstractProperties {
         do {
             Object.getOwnPropertyNames(currentObj).map(item => properties.add(item))
         } while ((currentObj = Object.getPrototypeOf(currentObj)))
-        return [...properties.keys()].filter(item => typeof obj[item] === 'function' &&
-            !['constructor', 'hasOwnProperty', 'isPrototypeOf'].includes(item) && !item.startsWith("__"))
+        const rv = [];
+        for (let item of [...properties.keys()]) {
+            try {
+                if (item && typeof obj[item] === 'function' &&
+                    !['constructor', 'hasOwnProperty', 'isPrototypeOf'].includes(item) && !item.startsWith("__"))
+                    rv.push(item)
+            } catch (e) {
+            }
+        }
+        return rv;
+        // return [...properties.keys()].filter(item => typeof obj[item] === 'function' &&
+        //     !['constructor', 'hasOwnProperty', 'isPrototypeOf'].includes(item) && !item.startsWith("__"))
     }
 
     /**

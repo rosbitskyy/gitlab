@@ -10,10 +10,11 @@ class Responses extends AbstractProperties {
 
     /**
      * @param {[]|AbstractList|Jobs} list
+     * @param {Response} responseClass
      */
-    constructor(list) {
+    constructor(list, responseClass = Response) {
         super();
-        this.setProperties(new AbstractList(list), this.#list, false, Response)
+        this.setProperties(new AbstractList(list), this.#list, false, responseClass)
     }
 
     /**
