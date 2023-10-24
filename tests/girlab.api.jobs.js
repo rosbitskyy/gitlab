@@ -10,7 +10,6 @@
 const GitLab = require("../");
 const {describe, it} = require("node:test");
 const {strict: assert} = require("node:assert");
-const Jobs = require("../src/GitLab/Jobs");
 
 (async () => {
 
@@ -18,7 +17,7 @@ const Jobs = require("../src/GitLab/Jobs");
         privateToken: process.env.GIT_TOKEN,
         projectId: process.env.GIT_PID,
     }));
-    console.log(gitLab.Jobs.uri)
+    console.log(gitLab.Jobs.methods)
 
     const jobs = await gitLab.Jobs.jobs(new GitLab.PaginateParams({page: 2, per_page: 20}));
     const erasedJobs = new GitLab.Jobs([])

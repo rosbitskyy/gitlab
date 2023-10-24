@@ -12,50 +12,40 @@ const fetch = require("node-fetch");
 
 class APIRequest {
 
+    methods = ['get', 'head', 'delete', 'patch', 'post', 'put', 'options'];
+    /**
+     * @param {string} v
+     * @return {boolean}
+     */
+    withBody = (v) => !!v && ![this.methods[0], this.methods[1]].includes(v.toLowerCase());
+
     /**
      * @param {API} api
      */
     constructor(api) {
         this.api = api;
+        this.#makeSpecification();
     }
 
-    /**
-     * @param {string} url
-     * @param {object:{}} body
-     * @return {Promise<*|null>}
-     */
-    async post(url, body = null) {
-        if (body && body.constructor !== ''.constructor) body = JSON.stringify(body);
-        return await this.execute(url, {method: 'POST', ...(body && {body})});
+    #makeSpecification() {
+        /**
+         * @param {string} url
+         * @param {object} opts
+         * @return {Promise<{ok}|*|null>}
+         */
+        const execute = async (url, opts = {}) => {
+            opts.headers = {...(opts.headers || {}), ...this.api.options.header.headers}
+            return await fetch(url, opts);
+        }
+        for (let v of this.methods) {
+            if (!this.withBody(v))
+                this[v] = async (url) => await execute(url, {method: v.toUpperCase()});
+            else this[v] = async (url, body = null) => {
+                if (body && body.constructor !== ''.constructor) body = JSON.stringify(body);
+                return await execute(url, {method: v.toUpperCase(), ...(body && {body})});
+            }
+        }
     }
-    async put(url, body = null) {
-        if (body && body.constructor !== ''.constructor) body = JSON.stringify(body);
-        return await this.execute(url, {method: 'POST', ...(body && {body})});
-    }
-
-
-    /**
-     * @param {string} url
-     * @return {Promise<*|null>}
-     */
-    async get(url) {
-        return await this.execute(url, {method: 'GET'});
-    }
-
-    async delete(url) {
-        return await this.execute(url, {method: 'DELETE'});
-    }
-
-    /**
-     * @param {string} url
-     * @param {object} opts
-     * @return {Promise<{ok}|*|null>}
-     */
-    async execute(url, opts = {}) {
-        opts.headers = {...(opts.headers || {}), ...this.api.options.header.headers}
-        return await fetch(url, opts);
-    }
-
 }
 
 module.exports = APIRequest

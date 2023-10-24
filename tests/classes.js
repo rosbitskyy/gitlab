@@ -33,7 +33,7 @@ const Method = require("../src/GitLab/Method");
     for (let a of gitLab.getOwnPropertyNames()) {
         describe(a + ' API class', () => {
             it('instanceof AbstractProperties', () => assert.strictEqual(gitLab[a] instanceof GitLab.AbstractProperties, true))
-            for (let k of Object.keys(gitLab[a].uri)) {
+            for (let k of Object.keys(gitLab[a].methods)) {
                 it(a + '.' + k, () => assert.strictEqual(gitLab[a].uri[k] instanceof Method, true))
             }
         })
