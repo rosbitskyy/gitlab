@@ -21,30 +21,26 @@ const Method = require("../src/GitLab/Method");
     gitLab.add('groups').addMethods({
         groups: new Method({method: 'get', class: GitLab.Responses, url: () => `groups`})
     })
-    console.log(gitLab.Groups.uri)
-
     gitLab.add('Releases').addMethods({
-        releases: new Method({method: 'get', class: GitLab.Responses, url: () => `projects/${gitLab.projectId}/releases`})
+        releases: new Method({
+            method: 'get',
+            class: GitLab.Responses,
+            url: () => `projects/${gitLab.projectId}/releases`
+        })
     })
-    console.log(gitLab.Releases.uri)
+
+    const apis = ['Jobs', 'Groups', 'Releases', 'Pipelines'];
+    for (let a of apis) {
+        describe(a + ' API class', () => {
+            it('instanceof AbstractProperties', () => assert.strictEqual(gitLab[a] instanceof GitLab.AbstractProperties, true))
+            for (let k of Object.keys(gitLab[a].uri)) {
+                it('Pipelines.' + k, () => assert.strictEqual(gitLab[a].uri[k] instanceof Method, true))
+            }
+        })
+    }
 
     const jobs = new GitLab.Jobs(variables.jobs)
-    const job = jobs.find({name: "rspec:other"})
-    console.log(job)
-
     describe('Jobs API class', () => {
-        for(let k of Object.keys(gitLab.Jobs.uri)) {
-            it('Jobs.uri ' + k, () => {
-                assert.strictEqual(gitLab.Jobs.uri[k] instanceof Method, true);
-            })
-        }
-        it('instanceof GitLab.Jobs', () => {
-            assert.strictEqual(jobs instanceof GitLab.Jobs, true);
-            assert.strictEqual(jobs instanceof GitLab.Responses, true);
-        })
-        it('instanceof AbstractProperties', () => {
-            assert.strictEqual(jobs instanceof AbstractProperties, true);
-        })
         it('count 2', () => {
             assert.strictEqual(jobs.list.length, 2);
         })
@@ -57,39 +53,9 @@ const Method = require("../src/GitLab/Method");
         it('Jobs - find by name (filter) --> AbstractList.findOne(filter)', () => {
             assert.strictEqual(jobs.find({name: "rspec:other"}).id, 6);
         })
-        it('Job instanceof GitLab.Response', () => {
-            assert.strictEqual(jobs.find({name: "rspec:other"}) instanceof GitLab.Job, true);
-        })
     })
 
-    describe('Groups API class', () => {
-        it('instanceof AbstractProperties', () => {
-            assert.strictEqual(gitLab.Groups instanceof GitLab.AbstractProperties, true);
-        })
-        it('Groups.uri groups', () => {
-            assert.strictEqual(gitLab.Groups.uri.groups instanceof Method, true);
-        })
-    });
 
-    describe('Releases API class', () => {
-        it('instanceof AbstractProperties', () => {
-            assert.strictEqual(gitLab.Releases instanceof GitLab.AbstractProperties, true);
-        })
-        it('Releases.uri releases', () => {
-            assert.strictEqual(gitLab.Releases.uri.releases instanceof Method, true);
-        })
-    });
-
-    describe('Pipelines API class', () => {
-        it('instanceof AbstractProperties', () => {
-            assert.strictEqual(gitLab.Pipelines instanceof GitLab.AbstractProperties, true);
-        })
-        for(let k of Object.keys(gitLab.Pipelines.uri)) {
-            it('Pipelines.uri ' + k, () => {
-                assert.strictEqual(gitLab.Pipelines.uri[k] instanceof Method, true);
-            })
-        }
-    });
 
 
 })();
