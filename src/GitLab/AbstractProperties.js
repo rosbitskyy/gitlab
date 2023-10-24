@@ -41,14 +41,14 @@ class AbstractProperties {
         for (let item of [...properties.keys()]) {
             try {
                 if (item && typeof obj[item] === 'function' &&
-                    !['constructor', 'hasOwnProperty', 'isPrototypeOf'].includes(item) && !item.startsWith("__"))
+                    !['constructor', 'hasOwnProperty', 'isPrototypeOf']
+                        .includes(item) && !item.startsWith("__"))
                     rv.push(item)
             } catch (e) {
+                // do nothing
             }
         }
         return rv;
-        // return [...properties.keys()].filter(item => typeof obj[item] === 'function' &&
-        //     !['constructor', 'hasOwnProperty', 'isPrototypeOf'].includes(item) && !item.startsWith("__"))
     }
 
     /**
