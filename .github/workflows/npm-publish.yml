@@ -23,6 +23,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       deployments: write
       id-token: write
     steps:
@@ -33,6 +34,6 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm i --prefer-online --no-fund --no-audit --package-lock-only -g npm@latest
       - run: npm ci
-      - run: npm publish
+      - run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
