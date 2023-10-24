@@ -18,16 +18,22 @@ const JobVariablesAttributes = require("./JobVariablesAttributes");
 const Serializer = require("./Serializer");
 const AbstractList = require("./AbstractList");
 const AbstractKeyValue = require("./AbstractKeyValue");
+const AbstractProperties = require("./AbstractProperties");
+const Response = require("./Response");
+const Responses = require("./Responses");
 
 class GitLab {
     static API = API;
     static AbstractList = AbstractList;
     static AbstractKeyValue = AbstractKeyValue;
+    static AbstractProperties = AbstractProperties;
     static Error = GitLabError;
     static Options = Options;
     static PaginateParams = PaginateParams;
     static Job = Job;
     static Jobs = Jobs;
+    static Responses = Responses;
+    static Response = Response;
     static JobVariablesAttributes = JobVariablesAttributes;
     static Serializer = Serializer;
 }

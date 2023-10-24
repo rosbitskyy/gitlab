@@ -19,7 +19,7 @@ const Method = require("./Method");
 class API extends AbstractProperties {
 
     options = new Options({})
-    get projectId() {return this.api.options.projectId;}
+    get projectId() {return this.options.projectId;}
 
     /**
      * @param {Object|Options} options
@@ -46,17 +46,17 @@ class API extends AbstractProperties {
         const api = this.add('Jobs');
         api.addMethods({
             log: new Method({method: 'get', class: Object, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/trace`}),
-            trace: {method: 'get', class: Object, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/trace`},
-            job: {method: 'get', class: Job, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}`},
-            jobs: {method: 'get', class: Jobs, url: () => `projects/${this.projectId}/jobs`},
-            erase: {method: 'post', class: Job, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/erase`},
-            cancel: {method: 'post', class: Job, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/cancel`},
-            retry: {method: 'post', class: Job, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/retry`},
-            play: {method: 'post', class: Job, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/play`},
-            run: {method: 'post', class: Job, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/play`},
-            pipelines: {method: 'get', class: Jobs, url: (pipeline_id) => `projects/${this.projectId}/pipelines/${pipeline_id}/jobs`},
-            trigger: {method: 'get', class: Jobs, url: (pipeline_id) => `projects/${this.projectId}/pipelines/${pipeline_id}/bridges`},
-            bridges: {method: 'get', class: Jobs, url: (pipeline_id) => `projects/${this.projectId}/pipelines/${pipeline_id}/bridges`},
+            trace: new Method({method: 'get', class: Object, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/trace`}),
+            job: new Method({method: 'get', class: Job, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}`}),
+            jobs: new Method({method: 'get', class: Jobs, url: () => `projects/${this.projectId}/jobs`}),
+            erase: new Method({method: 'post', class: Job, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/erase`}),
+            cancel: new Method({method: 'post', class: Job, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/cancel`}),
+            retry: new Method({method: 'post', class: Job, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/retry`}),
+            play: new Method({method: 'post', class: Job, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/play`}),
+            run: new Method({method: 'post', class: Job, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/play`}),
+            pipelines: new Method({method: 'get', class: Jobs, url: (pipeline_id) => `projects/${this.projectId}/pipelines/${pipeline_id}/jobs`}),
+            trigger: new Method({method: 'get', class: Jobs, url: (pipeline_id) => `projects/${this.projectId}/pipelines/${pipeline_id}/bridges`}),
+            bridges: new Method({method: 'get', class: Jobs, url: (pipeline_id) => `projects/${this.projectId}/pipelines/${pipeline_id}/bridges`}),
         })
     }
 }

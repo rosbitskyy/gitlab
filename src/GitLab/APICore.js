@@ -11,9 +11,8 @@
 const GitLabError = require("./GitLabError");
 const PaginateParams = require("./PaginateParams");
 const APIRequest = require("./APIRequest");
-const Jobs = require("./Jobs");
-const Job = require("./Job");
 const AbstractProperties = require("./AbstractProperties");
+const Responses = require("./Responses");
 
 class APICore extends AbstractProperties {
     api
@@ -22,7 +21,10 @@ class APICore extends AbstractProperties {
     #methods = {
         //keys: {method: 'get', class: Object, url: (id) => `/keys/${id}`},
     };
-    get uri(){return this.#methods}
+
+    get uri() {
+        return this.#methods
+    }
 
     get apiUrl() {
         return this.api.options.apiUrl;
@@ -35,9 +37,8 @@ class APICore extends AbstractProperties {
 
     /**
      * @param {API} api
-     * @param {boolean} construct
      */
-    constructor(api, construct = false) {
+    constructor(api) {
         super();
         this.api = api;
         this.request = new APIRequest(api);
@@ -80,8 +81,8 @@ class APICore extends AbstractProperties {
                         if (id && id instanceof PaginateParams) switchIt(id);
                         else if (id && id.constructor === {}.constructor) switchIt(new PaginateParams(id));
                         else if (params && params.constructor === {}.constructor && spec.method === 'post') body = params;
-                        else if (!params && !id && Class === Jobs && spec.method === 'get') params = new PaginateParams({})
-                        const url = this.apiUrl + (id ? spec.url(id) : spec.url()) + ((Class === Jobs) ? params.toString() : '');
+                        else if (!params && !id && Class === Responses && spec.method === 'get') params = new PaginateParams({})
+                        const url = this.apiUrl + (id ? spec.url(id) : spec.url()) + ((Class === Responses) ? params.toString() : '');
                         const _args = [url];
                         if (body) _args.push(body);
                         const response = await this.request[spec.method](..._args);

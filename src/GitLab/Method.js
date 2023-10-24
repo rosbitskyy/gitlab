@@ -8,9 +8,7 @@
  * @license Licensed under the MIT License (MIT)
  */
 
-const AbstractProperties = require("./AbstractProperties");
-
-class Method extends AbstractProperties {
+class Method {
     /**
      * @type {string}
      */
@@ -25,11 +23,10 @@ class Method extends AbstractProperties {
     url;
 
     /**
-     * @param {object:{}} options
+     * @param {object:{}} props
      */
-    constructor(options) {
-        super()
-        this.setProperties(options, this)
+    constructor(props) {
+        for (let key of Object.keys(props)) if (this.hasOwnProperty(key)) this[key] = props[key];
     }
 }
 

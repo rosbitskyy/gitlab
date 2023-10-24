@@ -18,23 +18,20 @@ const Method = require("../src/GitLab/Method");
         privateToken: process.env.GIT_TOKEN,
         projectId: process.env.GIT_PID,
     }));
-    console.log(gitLab.Jobs.uri)
 
-    const groups = gitLab.add('groups');
-    groups.addMethods({
-        groups: new Method({method: 'get', class: Object, url: () => `groups`})
+    gitLab.add('groups').addMethods({
+        groups: new Method({method: 'get', class: GitLab.Responses, url: () => `groups`})
     })
-    const groupsList = await gitLab.Groups.groups(new GitLab.PaginateParams({page: 2, per_page: 20}));
+    console.log(gitLab.Groups.uri)
 
-    describe('New Jobs class', () => {
-        it('Jobs instanceof GitLab.Jobs', () => {
-            assert.strictEqual(jobs instanceof GitLab.Jobs, true);
+    const groups = await gitLab.Groups.groups(new GitLab.PaginateParams({page: 2, per_page: 20}));
+
+    describe('New dynamic Groups class', () => {
+        it('Groups instanceof GitLab.API', () => {
+            assert.strictEqual(groups instanceof GitLab.Responses, true);
         })
-        it('Jobs count', () => {
-            assert.strictEqual(jobs.list.length > 1, true);
-        })
-        it('Jobs status is `success`', () => {
-            assert.strictEqual(jobs.find({status: 'success'}).status, 'success');
+        it('Groups count', () => {
+            assert.strictEqual(groups.list.length === 0, true);
         })
     })
 })();

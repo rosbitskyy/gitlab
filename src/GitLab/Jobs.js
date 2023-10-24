@@ -8,35 +8,14 @@
  * @license Licensed under the MIT License (MIT)
  */
 
+const Responses = require("./Responses");
 
-const AbstractProperties = require("./AbstractProperties");
-const Job = require("./Job");
-const AbstractList = require("./AbstractList");
-
-class Jobs extends AbstractProperties {
+class Jobs extends Responses {
     /**
-     * @type {[AbstractList]}
+     * @param {[]|AbstractList} v
      */
-    #jobs = new AbstractList()
-
-    /**
-     * @param {[]|AbstractList|Jobs} jobs
-     */
-    constructor(jobs) {
-        super();
-        this.setProperties(new AbstractList(jobs), this.#jobs, false, Job)
-    }
-
-    /**
-     * @param {object} filter
-     * @return {Job}
-     */
-    find(filter) {
-        return this.#jobs.findOne(filter)
-    }
-
-    get list() {
-        return this.#jobs
+    constructor(v) {
+        super(v);
     }
 }
 

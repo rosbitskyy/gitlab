@@ -90,12 +90,15 @@ console.log(erasedJobs.list)
 ```
 
 Add your own method that is not yet implemented by this api
+- [Take, for example, Groups](https://docs.gitlab.com/ee/api/groups.html)
 ```javascript
-const gitLab = new GitLab.API(new GitLab.Options({
-    privateToken: process.env.GIT_TOKEN,
-    projectId: process.env.GIT_PID,
-}));
+gitLab.add('groups').addMethods({
+    groups: new Method({method: 'get', class: GitLab.Responses, url: () => `groups`})
+})
+console.log(gitLab.Groups.uri)
 
+const groups = await gitLab.Groups.groups(new GitLab.PaginateParams({page: 2, per_page: 20}));
+console.log(groups.list)
 ```
 
 Thanks for your attention - the continuation of the api will come soon
