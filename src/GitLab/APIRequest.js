@@ -28,6 +28,11 @@ class APIRequest {
         if (body && body.constructor !== ''.constructor) body = JSON.stringify(body);
         return await this.execute(url, {method: 'POST', ...(body && {body})});
     }
+    async put(url, body = null) {
+        if (body && body.constructor !== ''.constructor) body = JSON.stringify(body);
+        return await this.execute(url, {method: 'POST', ...(body && {body})});
+    }
+
 
     /**
      * @param {string} url
@@ -35,6 +40,10 @@ class APIRequest {
      */
     async get(url) {
         return await this.execute(url, {method: 'GET'});
+    }
+
+    async delete(url) {
+        return await this.execute(url, {method: 'DELETE'});
     }
 
     /**

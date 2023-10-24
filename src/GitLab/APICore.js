@@ -17,7 +17,9 @@ const Responses = require("./Responses");
 class APICore extends AbstractProperties {
     api
 
-    #validMethods = ['get', 'post'];
+    #validMethods = ['get', 'post', 'delete', 'put', 'options'];
+    #withBody = (v)=> ['post', 'put'].includes(v);
+
     #methods = {
         //keys: {method: 'get', class: Object, url: (id) => `/keys/${id}`},
     };
@@ -71,20 +73,21 @@ class APICore extends AbstractProperties {
                 value: async (...args) => {
                     try {
                         const Class = spec.class || Object;
-                        let id = args.length > 0 ? args[0] : null;
-                        let params = args.length > 1 ? args[1] : null;
+                        let _a = args.length > 0 ? args[0] : null;
+                        let _p = args.length > 1 ? args[1] : null;
                         let body = null;
                         const switchIt = (v) => {
-                            params = v;
-                            id = null;
+                            _p = v;
+                            _a = null;
                         }
-                        if (id && id instanceof PaginateParams) switchIt(id);
-                        else if (id && id.constructor === {}.constructor) switchIt(new PaginateParams(id));
-                        else if (params && params.constructor === {}.constructor && spec.method === 'post') body = params;
-                        else if (!params && !id && Class === Responses && spec.method === 'get') params = new PaginateParams({})
-                        const url = this.apiUrl + (id ? spec.url(id) : spec.url()) + ((Class === Responses) ? params.toString() : '');
+                        if (_a && _a instanceof PaginateParams) switchIt(_a);
+                        else if (_a && _a.constructor === {}.constructor)
+                            if (this.#withBody(spec.method)) body = _a; else switchIt(new PaginateParams(_a));
+                        else if (_p && _p.constructor === {}.constructor && this.#withBody(spec.method)) body = _p;
+                        else if (!_p && !_a && Class === Responses && spec.method === 'get') _p = new PaginateParams({})
+                        const url = this.apiUrl + (_a ? spec.url(_a) : spec.url()) + ((Class === Responses) ? _p.toString() : '');
                         const _args = [url];
-                        if (body) _args.push(body);
+                        if (body) _args.push({body});
                         const response = await this.request[spec.method](..._args);
                         if (response.ok) return new Class(await response.json());
                         else {

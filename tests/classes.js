@@ -33,6 +33,11 @@ const Method = require("../src/GitLab/Method");
     console.log(job)
 
     describe('Jobs API class', () => {
+        for(let k of Object.keys(gitLab.Jobs.uri)) {
+            it('Jobs.uri ' + k, () => {
+                assert.strictEqual(gitLab.Jobs.uri[k] instanceof Method, true);
+            })
+        }
         it('instanceof GitLab.Jobs', () => {
             assert.strictEqual(jobs instanceof GitLab.Jobs, true);
             assert.strictEqual(jobs instanceof GitLab.Responses, true);
@@ -73,6 +78,17 @@ const Method = require("../src/GitLab/Method");
         it('Releases.uri releases', () => {
             assert.strictEqual(gitLab.Releases.uri.releases instanceof Method, true);
         })
+    });
+
+    describe('Pipelines API class', () => {
+        it('instanceof AbstractProperties', () => {
+            assert.strictEqual(gitLab.Pipelines instanceof GitLab.AbstractProperties, true);
+        })
+        for(let k of Object.keys(gitLab.Pipelines.uri)) {
+            it('Pipelines.uri ' + k, () => {
+                assert.strictEqual(gitLab.Pipelines.uri[k] instanceof Method, true);
+            })
+        }
     });
 
 

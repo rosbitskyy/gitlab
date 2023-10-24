@@ -16,17 +16,21 @@ class PaginateParams extends AbstractProperties {
     page = 1;
     per_page = 20;
     scope = new AbstractList()
+    order_by;
+    sort;
+    status = new AbstractList();
+    source = new AbstractList();
 
     constructor(params) {
         super()
-        this.setProperties(params, this)
+        this.setProperties(params, this, false)
     }
 
     toString() {
         let rv = '?';
         const prefix = () => rv.length > 1 ? '&' : '';
         for (let k of Object.keys(this)) {
-            if (!(this[k] instanceof Function))
+            if (!(this[k] instanceof Function) && !!this[k])
                 if (this[k] instanceof Array) for (let v of this[k]) rv += `${prefix()}${k}[]=${v}`;
                 else rv += `${prefix()}${k}=${this[k]}`;
         }
