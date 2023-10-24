@@ -107,6 +107,9 @@ gitLab.add('Releases').addMethods({
     releases: new Method({method: 'get', class: GitLab.Responses, url: () => `projects/${gitLab.projectId}/releases`})
 })
 console.log(gitLab.Releases.uri)
+
+const releases = await gitLab.Releases.releases(new GitLab.PaginateParams({page: 2, per_page: 20}));
+console.log(releases.list)
 ```
 
 Thanks for your attention - the continuation of the api will come soon
