@@ -83,7 +83,8 @@ console.log(gitLab.Jobs.uri)
 Get a single job of a project
 
 ```javascript
-const jobs = await gitLab.Jobs.jobs(new GitLab.PaginateParams({page: 1, per_page: 1, scope: ['success']}));
+const jobs = await gitLab.Jobs.jobs(
+    new GitLab.PaginateParams({page: 1, per_page: 1, scope: ['success']}));
 // const jobs = await gitLab.Jobs.jobs(new GitLab.PaginateParams({})); // page: 1, per_page: 20, all scopes
 // const jobs = await gitLab.Jobs.jobs(); // page: 1, per_page: 20, all scopes
 console.log('jobs:', jobs.list)
@@ -111,31 +112,6 @@ for (let job of jobs.list) {
 console.log(erasedJobs.list)
 ```
 
-Add your own method that is not yet implemented by this api
-
-- [Take, for example, Groups](https://docs.gitlab.com/ee/api/groups.html)
-
-```javascript
-gitLab.add('groups').addMethods({
-    groups: new Method({method: 'get', class: GitLab.Responses, url: () => `groups`})
-})
-console.log(gitLab.Groups.uri)
-
-const groups = await gitLab.Groups.groups(new GitLab.PaginateParams({page: 2, per_page: 20}));
-console.log(groups.list)
-```
-
-[Releases](https://docs.gitlab.com/ee/api/releases/)
-
-```javascript
-gitLab.add('Releases').addMethods({
-    releases: new Method({method: 'get', class: GitLab.Responses, url: () => `projects/${gitLab.projectId}/releases`})
-})
-console.log(gitLab.Releases.uri)
-
-const releases = await gitLab.Releases.releases(new GitLab.PaginateParams({page: 2, per_page: 20}));
-console.log(releases.list)
-```
 
 [Pipelines](https://docs.gitlab.com/ee/api/pipelines.html#list-project-pipelines)
 ```javascript
@@ -146,6 +122,35 @@ const pipelines = await gitLab.Pipelines.pipelines(new GitLab.PaginateParams({
     page: 1, per_page: 20,
 }));
 console.log(pipelines.list)
+```
+
+Add your own method that is not yet implemented by this api
+
+- [Take, for example, Groups](https://docs.gitlab.com/ee/api/groups.html)
+
+```javascript
+gitLab.add('groups').addMethods({
+    groups: new Method({method: 'get', class: GitLab.Responses, 
+        url: () => `groups`})
+})
+console.log(gitLab.Groups.uri)
+
+const groups = await gitLab.Groups.groups(
+    new GitLab.PaginateParams({page: 2, per_page: 20}));
+console.log(groups.list)
+```
+
+[Releases](https://docs.gitlab.com/ee/api/releases/)
+
+```javascript
+gitLab.add('Releases').addMethods({
+    releases: new Method({method: 'get', class: GitLab.Responses, 
+        url: () => `projects/${gitLab.projectId}/releases`})
+})
+console.log(gitLab.Releases.uri)
+
+const releases = await gitLab.Releases.releases(new GitLab.PaginateParams({page: 2, per_page: 20}));
+console.log(releases.list)
 ```
 
 Thanks for your attention - the continuation of the api will come soon
