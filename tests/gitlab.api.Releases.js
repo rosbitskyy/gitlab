@@ -26,6 +26,7 @@ const Method = require("../src/GitLab/Method");
     console.log(gitLab.Releases.uri)
 
     const releases = await gitLab.Releases.releases(new GitLab.PaginateParams({page: 2, per_page: 20}));
+    console.log(releases.list)
 
     describe('New dynamic Releases class', () => {
         it('Releases instanceof GitLab.API', () => {
