@@ -1,5 +1,6 @@
 # Integration with GitLab REST API
 
+[![os, nodes](https://github.com/rosbitskyy/gitlab/actions/workflows/push-main.yml/badge.svg)](https://github.com/rosbitskyy/gitlab/actions)
 [![npm version](https://img.shields.io/npm/v/gitlab-restapi.svg)](https://www.npmjs.com/package/gitlab-restapi)
 [![Downloads/month](https://img.shields.io/npm/dm/gitlab-restapi.svg)](http://www.npmtrends.com/gitlab-restapi)
 
