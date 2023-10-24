@@ -15,6 +15,7 @@ const GitLabError = require("./GitLabError");
 const Job = require("./Job");
 const Jobs = require("./Jobs");
 const Method = require("./Method");
+const Response = require("./Response");
 
 class API extends AbstractProperties {
 
@@ -45,8 +46,8 @@ class API extends AbstractProperties {
     #defautlSpecification() {
         const api = this.add('Jobs');
         api.addMethods({
-            log: new Method({method: 'get', class: Object, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/trace`}),
-            trace: new Method({method: 'get', class: Object, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/trace`}),
+            log: new Method({method: 'get', class: Response, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/trace`}),
+            trace: new Method({method: 'get', class: Response, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/trace`}),
             job: new Method({method: 'get', class: Job, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}`}),
             jobs: new Method({method: 'get', class: Jobs, url: () => `projects/${this.projectId}/jobs`}),
             erase: new Method({method: 'post', class: Job, url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/erase`}),

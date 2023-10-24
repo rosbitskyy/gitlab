@@ -16,15 +16,18 @@ const AbstractProperties = require("../src/GitLab/AbstractProperties");
 (async () => {
 
     const jobs = new GitLab.Jobs(variables.jobs)
+    const job = jobs.find({name: "rspec:other"})
+    console.log(job)
 
     describe('Jobs class', () => {
-        it('Jobs instanceof GitLab.Jobs', () => {
+        it('instanceof GitLab.Jobs', () => {
             assert.strictEqual(jobs instanceof GitLab.Jobs, true);
+            assert.strictEqual(jobs instanceof GitLab.Responses, true);
         })
-        it('Jobs instanceof AbstractProperties', () => {
+        it('instanceof AbstractProperties', () => {
             assert.strictEqual(jobs instanceof AbstractProperties, true);
         })
-        it('Jobs count 2', () => {
+        it('count 2', () => {
             assert.strictEqual(jobs.list.length, 2);
         })
         it('Jobs has own properties from AbstractList and AbstractProperties', () => {
@@ -36,8 +39,8 @@ const AbstractProperties = require("../src/GitLab/AbstractProperties");
         it('Jobs - find by name (filter) --> AbstractList.findOne(filter)', () => {
             assert.strictEqual(jobs.find({name: "rspec:other"}).id, 6);
         })
-        it('Job instanceof GitLab.Job', () => {
-            assert.strictEqual(jobs.find({name: "rspec:other"}) instanceof GitLab.Job, true);
+        it('Job instanceof GitLab.Response', () => {
+            assert.strictEqual(jobs.find({name: "rspec:other"}) instanceof GitLab.Response, true);
         })
     })
 

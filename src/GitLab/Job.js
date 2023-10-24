@@ -11,11 +11,12 @@
 
 const AbstractProperties = require("./AbstractProperties");
 const Serializer = require("./Serializer");
+const Response = require("./Response");
 
 /**
  * Just example of response: https://docs.gitlab.com/ee/api/jobs.html#list-project-jobs
  */
-class Job extends AbstractProperties {
+class Job extends Response {
 
     #statuses = {
         'success': '✅',
@@ -37,8 +38,7 @@ class Job extends AbstractProperties {
      * @param {Job|Object} props
      */
     constructor(props = {}) {
-        super()
-        this.setProperties(Serializer.normalize(props), this, false);
+        super(props)
     }
 
     get isSuccess() {
