@@ -12,14 +12,22 @@ const GitLab = require("../src");
 const {describe, it} = require("node:test");
 const {strict: assert} = require("node:assert");
 const AbstractProperties = require("../src/GitLab/AbstractProperties");
+const Method = require("../src/GitLab/Method");
 
 (async () => {
+
+    const gitLab = new GitLab.API(new GitLab.Options({}));
+
+    gitLab.add('groups').addMethods({
+        groups: new Method({method: 'get', class: GitLab.Responses, url: () => `groups`})
+    })
+    console.log(gitLab.Groups.uri)
 
     const jobs = new GitLab.Jobs(variables.jobs)
     const job = jobs.find({name: "rspec:other"})
     console.log(job)
 
-    describe('Jobs class', () => {
+    describe('Jobs API class', () => {
         it('instanceof GitLab.Jobs', () => {
             assert.strictEqual(jobs instanceof GitLab.Jobs, true);
             assert.strictEqual(jobs instanceof GitLab.Responses, true);
@@ -43,6 +51,15 @@ const AbstractProperties = require("../src/GitLab/AbstractProperties");
             assert.strictEqual(jobs.find({name: "rspec:other"}) instanceof GitLab.Response, true);
         })
     })
+
+    describe('Groups API class', () => {
+        it('instanceof AbstractProperties', () => {
+            assert.strictEqual(gitLab.Groups instanceof GitLab.AbstractProperties, true);
+        })
+        it('Groups.uri groups', () => {
+            assert.strictEqual(gitLab.Groups.uri.groups instanceof Method, true);
+        })
+    });
 
 
 })();
