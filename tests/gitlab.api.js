@@ -50,7 +50,8 @@ const Method = require("../src/GitLab/Method");
     })
 
     console.log(gitLab.Pipelines.uri)
-    const pipelines = await gitLab.Pipelines.pipelines(new GitLab.PaginateParams({page: 1, per_page: 20,}));
+    const pipelines = await gitLab.Pipelines.pipelines(new GitLab.PaginateParams({
+            page: 1, per_page: 20,  status: 'success', source: 'push',}));
     console.log(pipelines.list)
     describe('New dynamic Pipelines class', () => {
         it('Pipelines instanceof GitLab.API', () => {

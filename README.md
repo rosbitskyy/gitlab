@@ -122,8 +122,7 @@ const pipelinelatest = await gitLab.Pipelines.latest();
 console.log(pipelinelatest)
 
 const pipelines = await gitLab.Pipelines.pipelines(new GitLab.PaginateParams({
-    page: 1, per_page: 20,
-}));
+    page: 1, per_page: 20,  status: 'success', source: 'push',}));
 console.log(pipelines.list)
 ```
 
