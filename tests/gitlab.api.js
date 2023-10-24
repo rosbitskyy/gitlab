@@ -23,7 +23,7 @@ const Method = require("../src/GitLab/Method");
     gitLab.add('Releases').addMethods({
         releases: new Method({method: 'get', class: GitLab.Responses, url: () => `projects/${gitLab.projectId}/releases`})
     })
-    console.log(gitLab.Releases.uri)
+    console.log(gitLab.Releases.methods)
     const releases = await gitLab.Releases.releases(new GitLab.PaginateParams({page: 1, per_page: 20}));
     console.log(releases.list)
     describe('New dynamic Releases class', () => {
@@ -38,7 +38,7 @@ const Method = require("../src/GitLab/Method");
     gitLab.add('groups').addMethods({
         groups: new Method({method: 'get', class: GitLab.Responses, url: () => `groups`})
     })
-    console.log(gitLab.Groups.uri)
+    console.log(gitLab.Groups.methods)
     const groups = await gitLab.Groups.groups(new GitLab.PaginateParams({page: 1, per_page: 20}));
     describe('New dynamic Groups class', () => {
         it('Groups instanceof GitLab.API', () => {
@@ -49,7 +49,7 @@ const Method = require("../src/GitLab/Method");
         })
     })
 
-    console.log(gitLab.Pipelines.uri)
+    console.log(gitLab.Pipelines.methods)
     const pipelines = await gitLab.Pipelines.pipelines(new GitLab.PaginateParams({
             page: 1, per_page: 20,  status: 'success', source: 'push',}));
     console.log(pipelines.list)
