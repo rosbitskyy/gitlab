@@ -18,11 +18,18 @@ class APICore extends AbstractProperties {
     api
 
     #validMethods = ['get', 'post', 'delete', 'put', 'options'];
-    #withBody = (v)=> ['post', 'put'].includes(v);
+    #withBody = (v) => ['post', 'put'].includes(v);
 
+    /**
+     * @type {[Method]}
+     */
     #methods = {
         //keys: {method: 'get', class: Object, url: (id) => `/keys/${id}`},
     };
+
+    get methods() {
+        return this.#methods
+    }
 
     get uri() {
         return this.#methods

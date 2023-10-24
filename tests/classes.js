@@ -29,12 +29,12 @@ const Method = require("../src/GitLab/Method");
         })
     })
 
-    const apis = ['Jobs', 'Groups', 'Releases', 'Pipelines'];
-    for (let a of apis) {
+
+    for (let a of gitLab.getOwnPropertyNames()) {
         describe(a + ' API class', () => {
             it('instanceof AbstractProperties', () => assert.strictEqual(gitLab[a] instanceof GitLab.AbstractProperties, true))
             for (let k of Object.keys(gitLab[a].uri)) {
-                it('Pipelines.' + k, () => assert.strictEqual(gitLab[a].uri[k] instanceof Method, true))
+                it(a + '.' + k, () => assert.strictEqual(gitLab[a].uri[k] instanceof Method, true))
             }
         })
     }
@@ -42,7 +42,6 @@ const Method = require("../src/GitLab/Method");
     const jobs = new GitLab.Jobs(variables.jobs)
     const pipelines = new GitLab.Responses(variables.pipelines)
 
-    console.log(gitLab.getOwnPropertyNames())
 
     describe('Jobs API class', () => {
         it('count 2', () => {
