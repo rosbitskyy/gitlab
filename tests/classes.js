@@ -40,6 +40,10 @@ const Method = require("../src/GitLab/Method");
     }
 
     const jobs = new GitLab.Jobs(variables.jobs)
+    const pipelines = new GitLab.Responses(variables.pipelines)
+
+    console.log(gitLab.getOwnPropertyNames())
+
     describe('Jobs API class', () => {
         it('count 2', () => {
             assert.strictEqual(jobs.list.length, 2);
@@ -50,12 +54,13 @@ const Method = require("../src/GitLab/Method");
             const jp = jobs.getOwnPropertyOf(jobs)
             assert.strictEqual(props.size, jp.length);
         })
-        it('Jobs - find by name (filter) --> AbstractList.findOne(filter)', () => {
-            assert.strictEqual(jobs.find({name: "rspec:other"}).id, 6);
+        it('Jobs - find and findOne', () => {
+            assert.strictEqual(jobs.find({name: "teaspoon"}).id, jobs.findOne({name: "teaspoon"}).id);
+        })
+        it('Pipelines - find by source', () => {
+            assert.strictEqual(pipelines.find({source: variables.pipeline.source}).project_id, variables.pipeline.project_id);
         })
     })
-
-
 
 
 })();

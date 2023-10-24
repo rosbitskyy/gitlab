@@ -66,9 +66,6 @@ class AbstractProperties {
         })
     }
 
-    capitalize = function (v) {
-        return v.charAt(0).toUpperCase() + v.slice(1);
-    }
 }
 
 module.exports = AbstractProperties;

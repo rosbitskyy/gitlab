@@ -22,6 +22,10 @@ class API extends AbstractProperties {
 
     options = new Options({})
 
+    getOwnPropertyNames(){
+        return Object.getOwnPropertyNames(this).filter(it=> this[it] instanceof APICore)
+    }
+
     get projectId() {
         return this.options.projectId;
     }
@@ -41,7 +45,7 @@ class API extends AbstractProperties {
      * @return {APICore}
      */
     add(apiName) {
-        apiName = this.capitalize(apiName);
+        apiName = apiName.capitalize();
         if (this.hasOwnProperty(apiName)) return this[apiName];
         this[apiName] = new APICore(this);
         return this[apiName];

@@ -21,6 +21,9 @@ const AbstractKeyValue = require("./AbstractKeyValue");
 const AbstractProperties = require("./AbstractProperties");
 const Response = require("./Response");
 const Responses = require("./Responses");
+String.prototype.capitalize = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
 
 class GitLab {
     static API = API;
