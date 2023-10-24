@@ -8,14 +8,21 @@
  * @license Licensed under the MIT License (MIT)
  */
 
-
 const AbstractProperties = require("./AbstractProperties");
 
-class Options extends AbstractProperties {
-    apiUrl = 'https://gitlab.com/api/v4/';
-    maxRetries = 5;
-    privateToken = '';
-    projectId = '';
+class Method extends AbstractProperties {
+    /**
+     * @type {string}
+     */
+    method;
+    /**
+     * @type {Object}
+     */
+    class;
+    /**
+     * @type {Object|Function}
+     */
+    url;
 
     /**
      * @param {object:{}} options
@@ -24,10 +31,6 @@ class Options extends AbstractProperties {
         super()
         this.setProperties(options, this)
     }
-
-    get header() {
-        return {headers: {'Content-Type': 'application/json', 'PRIVATE-TOKEN': this.privateToken}}
-    }
 }
 
-module.exports = Options;
+module.exports = Method

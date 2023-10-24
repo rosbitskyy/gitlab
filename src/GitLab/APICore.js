@@ -15,25 +15,17 @@ const Jobs = require("./Jobs");
 const Job = require("./Job");
 const AbstractProperties = require("./AbstractProperties");
 
-class APIJobs extends AbstractProperties {
+class APICore extends AbstractProperties {
     api
 
-    #methods = ['get', 'post'];
-    uri = {
-        //artifacts: {method: 'get', class: Object, url: (job_id) => `${this.baseUrl}/jobs/${job_id}/artifacts`},
-        trace: {method: 'get', class: Object, url: (job_id) => `${this.baseUrl}/jobs/${job_id}/trace`},
-        job: {method: 'get', class: Job, url: (job_id) => `${this.baseUrl}/jobs/${job_id}`},
-        jobs: {method: 'get', class: Jobs, url: () => `${this.baseUrl}/jobs`},
-        erase: {method: 'post', class: Job, url: (job_id) => `${this.baseUrl}/jobs/${job_id}/erase`},
-        cancel: {method: 'post', class: Job, url: (job_id) => `${this.baseUrl}/jobs/${job_id}/cancel`},
-        retry: {method: 'post', class: Job, url: (job_id) => `${this.baseUrl}/jobs/${job_id}/retry`},
-        play: {method: 'post', class: Job, url: (job_id) => `${this.baseUrl}/jobs/${job_id}/play`},
-        pipelines: {method: 'get', class: Jobs, url: (pipeline_id) => `${this.baseUrl}/pipelines/${pipeline_id}/jobs`},
-        trigger: {method: 'get', class: Jobs, url: (pipeline_id) => `${this.baseUrl}/pipelines/${pipeline_id}/bridges`},
+    #validMethods = ['get', 'post'];
+    #methods = {
+        //keys: {method: 'get', class: Object, url: (id) => `/keys/${id}`},
     };
+    get uri(){return this.#methods}
 
-    get baseUrl() {
-        return this.api.options.apiUrl + `projects/${this.api.options.projectId}`;
+    get apiUrl() {
+        return this.api.options.apiUrl;
     };
 
     /**
@@ -43,39 +35,32 @@ class APIJobs extends AbstractProperties {
 
     /**
      * @param {API} api
+     * @param {boolean} construct
      */
-    constructor(api) {
+    constructor(api, construct = false) {
         super();
         this.api = api;
         this.request = new APIRequest(api);
-        this.#makeSynonims()
-        this.#makeSpecification()
     }
 
     /**
      * Add your own method that is not yet implemented by this api
      * @param {Object} v
      */
-    addMethod(v) {
+    addMethods(v) {
         if (!v || v.constructor !== {}.constructor) return;
         for (let k of Object.keys(v)) {
-            if (!this.uri[k] && this.#methods.includes(v[k].method) && !!v[k].class && !!v[k].url && typeof v[k].url === 'function')
-                this.uri[k] = v[k];
+            if (!this.#methods[k] && this.#validMethods.includes(v[k].method) && !!v[k].class && !!v[k].url && typeof v[k].url === 'function')
+                this.#methods[k] = v[k];
         }
         this.#makeSpecification()
     }
 
-    #makeSynonims() {
-        this.uri.log = this.uri.trace;
-        this.uri.bridges = this.uri.trigger;
-        this.uri.run = this.uri.play;
-    }
-
     #makeSpecification() {
         const ownProperties = this.getOwnPropertyOf(this)
-        for (let key of Object.keys(this.uri)) {
+        for (let key of Object.keys(this.#methods)) {
             if (ownProperties.includes(key)) continue
-            const spec = this.uri[key];
+            const spec = this.#methods[key];
             Object.defineProperty(this, key, {
                 writable: false,
                 /**
@@ -96,7 +81,7 @@ class APIJobs extends AbstractProperties {
                         else if (id && id.constructor === {}.constructor) switchIt(new PaginateParams(id));
                         else if (params && params.constructor === {}.constructor && spec.method === 'post') body = params;
                         else if (!params && !id && Class === Jobs && spec.method === 'get') params = new PaginateParams({})
-                        const url = (id ? spec.url(id) : spec.url()) + ((Class === Jobs) ? params.toString() : '');
+                        const url = this.apiUrl + (id ? spec.url(id) : spec.url()) + ((Class === Jobs) ? params.toString() : '');
                         const _args = [url];
                         if (body) _args.push(body);
                         const response = await this.request[spec.method](..._args);
@@ -116,4 +101,4 @@ class APIJobs extends AbstractProperties {
 
 }
 
-module.exports = APIJobs
+module.exports = APICore

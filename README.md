@@ -89,4 +89,13 @@ for (let job of jobs.list) {
 console.log(erasedJobs.list)
 ```
 
+Add your own method that is not yet implemented by this api
+```javascript
+const gitLab = new GitLab.API(new GitLab.Options({
+    privateToken: process.env.GIT_TOKEN,
+    projectId: process.env.GIT_PID,
+}));
+
+```
+
 Thanks for your attention - the continuation of the api will come soon

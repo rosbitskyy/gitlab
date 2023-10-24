@@ -10,7 +10,7 @@
 const GitLab = require("../");
 const {describe, it} = require("node:test");
 const {strict: assert} = require("node:assert");
-const Jobs = require("../src/GitLab/Jobs");
+const Method = require("../src/GitLab/Method");
 
 (async () => {
 
@@ -20,15 +20,11 @@ const Jobs = require("../src/GitLab/Jobs");
     }));
     console.log(gitLab.Jobs.uri)
 
-    const jobs = await gitLab.Jobs.jobs(new GitLab.PaginateParams({page: 2, per_page: 20}));
-    const erasedJobs = new GitLab.Jobs([])
-    for (let job of jobs.list) {
-        if (job.artifacts && job.artifacts.length) {
-            const obj = await gitLab.Jobs.erase(job.id);
-            if (obj) erasedJobs.push(obj)
-        }
-    }
-    console.log('erased:', erasedJobs.list)
+    const groups = gitLab.add('groups');
+    groups.addMethods({
+        groups: new Method({method: 'get', class: Object, url: () => `groups`})
+    })
+    const groupsList = await gitLab.Groups.groups(new GitLab.PaginateParams({page: 2, per_page: 20}));
 
     describe('New Jobs class', () => {
         it('Jobs instanceof GitLab.Jobs', () => {
