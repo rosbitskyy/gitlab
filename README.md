@@ -101,4 +101,12 @@ const groups = await gitLab.Groups.groups(new GitLab.PaginateParams({page: 2, pe
 console.log(groups.list)
 ```
 
+[Releases](https://docs.gitlab.com/ee/api/releases/)
+```javascript
+gitLab.add('Releases').addMethods({
+    releases: new Method({method: 'get', class: GitLab.Responses, url: () => `projects/${gitLab.projectId}/releases`})
+})
+console.log(gitLab.Releases.uri)
+```
+
 Thanks for your attention - the continuation of the api will come soon
