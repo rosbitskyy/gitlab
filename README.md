@@ -63,9 +63,8 @@ const job = jobs.find({name: 'testofclasses'});
 console.log(job.status)
 ```
 
-*
-*[scope](https://docs.gitlab.com/ee/api/jobs.html#run-a-job:~:text=No-,Scope%20of%20jobs%20to%20show.%20Either%20one%20of%20or%20an%20array%20of%20the%20following%3A%20created%2C%20pending%2C%20running%2C%20failed%2C%20success%2C%20canceled%2C%20skipped%2C%20waiting_for_resource%2C%20or%20manual.%20All%20jobs%20are%20returned%20if%20scope%20is%20not%20provided.,-curl%20%2D%2Dgloboff%20%2D%2Dheader)
-** - string or array of strings - Scope of jobs to show. Either one of or an array of the following: created, pending,
+[**scope**](https://docs.gitlab.com/ee/api/jobs.html#run-a-job:~:text=No-,Scope%20of%20jobs%20to%20show.%20Either%20one%20of%20or%20an%20array%20of%20the%20following%3A%20created%2C%20pending%2C%20running%2C%20failed%2C%20success%2C%20canceled%2C%20skipped%2C%20waiting_for_resource%2C%20or%20manual.%20All%20jobs%20are%20returned%20if%20scope%20is%20not%20provided.,-curl%20%2D%2Dgloboff%20%2D%2Dheader)
+- string or array of strings - Scope of jobs to show. Either one of or an array of the following: created, pending,
 running, failed, success, canceled, skipped, waiting_for_resource, or manual. All jobs are returned if scope is not
 provided.
 
