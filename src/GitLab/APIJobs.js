@@ -13,10 +13,12 @@ const PaginateParams = require("./PaginateParams");
 const APIRequest = require("./APIRequest");
 const Jobs = require("./Jobs");
 const Job = require("./Job");
+const AbstractProperties = require("./AbstractProperties");
 
-class APIJobs {
+class APIJobs extends AbstractProperties {
     api
 
+    #methods = ['get', 'post'];
     uri = {
         //artifacts: {method: 'get', class: Object, url: (job_id) => `${this.baseUrl}/jobs/${job_id}/artifacts`},
         trace: {method: 'get', class: Object, url: (job_id) => `${this.baseUrl}/jobs/${job_id}/trace`},
@@ -43,9 +45,23 @@ class APIJobs {
      * @param {API} api
      */
     constructor(api) {
+        super();
         this.api = api;
         this.request = new APIRequest(api);
         this.#makeSynonims()
+        this.#makeSpecification()
+    }
+
+    /**
+     * Add your own method that is not yet implemented by this api
+     * @param {Object} v
+     */
+    addMethod(v) {
+        if (!v || v.constructor !== {}.constructor) return;
+        for (let k of Object.keys(v)) {
+            if (!this.uri[k] && this.#methods.includes(v[k].method) && !!v[k].class && !!v[k].url && typeof v[k].url === 'function')
+                this.uri[k] = v[k];
+        }
         this.#makeSpecification()
     }
 
@@ -56,7 +72,9 @@ class APIJobs {
     }
 
     #makeSpecification() {
+        const ownProperties = this.getOwnPropertyOf(this)
         for (let key of Object.keys(this.uri)) {
+            if (ownProperties.includes(key)) continue
             const spec = this.uri[key];
             Object.defineProperty(this, key, {
                 writable: false,

@@ -10,6 +10,7 @@
 const GitLab = require("../");
 const {describe, it} = require("node:test");
 const {strict: assert} = require("node:assert");
+const Jobs = require("../src/GitLab/Jobs");
 
 (async () => {
 
@@ -17,6 +18,11 @@ const {strict: assert} = require("node:assert");
         privateToken: process.env.GIT_TOKEN,
         projectId: process.env.GIT_PID,
     }));
+
+    gitLab.Jobs.addMethod({
+        jobs: {method: 'get', class: Jobs, url: () => `${gitLab.Jobs.baseUrl}/jobs`},
+        artifacts: {method: 'get', class: Object, url: (job_id) => `${gitLab.Jobs.baseUrl}/jobs/${job_id}/artifacts`},
+    })
     console.log(gitLab.Jobs.uri)
 
     const jobs = await gitLab.Jobs.jobs(new GitLab.PaginateParams({page: 2, per_page: 20}));
