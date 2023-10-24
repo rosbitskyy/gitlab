@@ -46,7 +46,7 @@ First install [Node.js](https://nodejs.org/uk)
 npm i gitlab-restapi
 ```
 
-An example of receiving a list of tasks divided into pages with the specified status
+### An example of receiving a list of tasks divided into pages with the specified status
 
 ```javascript
 const GitLab = require("gitlab-restapi");
@@ -69,7 +69,7 @@ console.log(job.status)
 running, failed, success, canceled, skipped, waiting_for_resource, or manual. All jobs are returned if scope is not
 provided.
 
-List of [Jobs](https://docs.gitlab.com/ee/api/jobs.html) methods:
+### List of [Jobs](https://docs.gitlab.com/ee/api/jobs.html) methods:
 
 ```javascript
 const GitLab = require("gitlab-restapi");
@@ -78,6 +78,9 @@ const gitLab = new GitLab.API(new GitLab.Options({
     projectId: process.env.GIT_PID,
 }));
 console.log(gitLab.Jobs.methods)
+
+// list of registered APIs
+console.log(gitLab.getOwnPropertyNames())
 ```
 
 Get a single job of a project
