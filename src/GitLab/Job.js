@@ -9,8 +9,6 @@
  */
 
 
-const AbstractProperties = require("./AbstractProperties");
-const Serializer = require("./Serializer");
 const Response = require("./Response");
 
 /**
