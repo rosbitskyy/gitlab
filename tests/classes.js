@@ -23,6 +23,11 @@ const Method = require("../src/GitLab/Method");
     })
     console.log(gitLab.Groups.uri)
 
+    gitLab.add('Releases').addMethods({
+        releases: new Method({method: 'get', class: GitLab.Responses, url: () => `projects/${gitLab.projectId}/releases`})
+    })
+    console.log(gitLab.Releases.uri)
+
     const jobs = new GitLab.Jobs(variables.jobs)
     const job = jobs.find({name: "rspec:other"})
     console.log(job)
@@ -58,6 +63,15 @@ const Method = require("../src/GitLab/Method");
         })
         it('Groups.uri groups', () => {
             assert.strictEqual(gitLab.Groups.uri.groups instanceof Method, true);
+        })
+    });
+
+    describe('Releases API class', () => {
+        it('instanceof AbstractProperties', () => {
+            assert.strictEqual(gitLab.Releases instanceof GitLab.AbstractProperties, true);
+        })
+        it('Releases.uri releases', () => {
+            assert.strictEqual(gitLab.Releases.uri.releases instanceof Method, true);
         })
     });
 
