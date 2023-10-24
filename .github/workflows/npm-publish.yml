@@ -37,7 +37,7 @@ jobs:
       - run: npm ci
       - run: |
           npm i --prefer-online --no-fund --no-audit -g npm@latest
-          npm config set '//registry.npmjs.org/:_authToken'=\${PUBLISH_TOKEN}
+          npm config set '//registry.npmjs.org/:_authToken'=\${NPM_TOKEN}
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
       - run: npm publish --provenance --access public
