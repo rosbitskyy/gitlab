@@ -1,6 +1,5 @@
 const Responses = require("./Responses");
 const Response = require("./Response");
-const AbstractProperties = require("./AbstractProperties");
 
 class DynamicResponse {
     static class(className) {
