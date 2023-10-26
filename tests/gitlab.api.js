@@ -21,7 +21,7 @@ const Method = require("../src/GitLab/Method");
 
     // https://docs.gitlab.com/ee/api/releases/
     gitLab.add('Releases').addMethods({
-        releases: new Method({method: 'get', class: GitLab.Responses, url: () => `projects/${gitLab.projectId}/releases`})
+        releases: new GitLab.Method({method: 'get', class: GitLab.Responses, url: () => `projects/${gitLab.projectId}/releases`})
     })
     console.log(gitLab.Releases.methods)
     const releases = await gitLab.Releases.releases(new GitLab.PaginateParams({page: 1, per_page: 20}));
