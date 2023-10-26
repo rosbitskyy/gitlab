@@ -91,8 +91,10 @@ const jobs = await gitLab.Jobs.jobs(
 // const jobs = await gitLab.Jobs.jobs(new GitLab.PaginateParams({})); // page: 1, per_page: 20, all scopes
 // const jobs = await gitLab.Jobs.jobs(); // page: 1, per_page: 20, all scopes
 console.log('jobs:', jobs.list)
+
 const _job = jobs.find({status: 'success'});
 console.log('found:', _job)
+
 const job = await gitLab.Jobs.job(_job.id);
 console.log('Get a single job of a project by id:', job)
 ```
@@ -132,7 +134,7 @@ Add your own method that is not yet implemented by this api
 
 ```javascript
 gitLab.add('groups').addMethods({
-    groups: new Method({method: 'get', class: GitLab.Responses, 
+    groups: new GitLab.Method({method: 'get', class: GitLab.Responses, 
         url: () => `groups`})
 })
 console.log(gitLab.Groups.methods)
@@ -146,7 +148,7 @@ console.log(groups.list)
 
 ```javascript
 gitLab.add('Releases').addMethods({
-    releases: new Method({method: 'get', class: GitLab.Responses, 
+    releases: new GitLab.Method({method: 'get', class: GitLab.Responses, 
         url: () => `projects/${gitLab.projectId}/releases`})
 })
 console.log(gitLab.Releases.methods)
