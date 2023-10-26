@@ -8,8 +8,6 @@
  * @license Licensed under the MIT License (MIT)
  */
 
-const fetch = require("node-fetch");
-
 class APIRequest {
 
     methods = ['get', 'head', 'delete', 'patch', 'post', 'put', 'options'];
@@ -35,7 +33,7 @@ class APIRequest {
          */
         const execute = async (url, opts = {}) => {
             opts.headers = {...(opts.headers || {}), ...this.api.options.header.headers}
-            return await fetch(url, opts);
+            return await this.api.options.fetchMethod(url, opts);
         }
         for (let v of this.methods) {
             if (!this.withBody(v))

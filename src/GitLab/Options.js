@@ -16,6 +16,7 @@ class Options extends AbstractProperties {
     maxRetries = 5;
     privateToken = '';
     projectId = '';
+    fetchMethod = fetch // node 18.x ++
 
     /**
      * @param {object:{}} options
