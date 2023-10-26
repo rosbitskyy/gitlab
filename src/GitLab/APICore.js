@@ -102,7 +102,7 @@ class APICore extends AbstractProperties {
                         if (response.ok) return new Class(await response.json());
                         else {
                             const e = await response.json();
-                            console.error('WARNING:', e.message + ' : ' + url)
+                            console.error('WARNING:', JSON.stringify({...e, url}))
                         }
                     } catch (e) {
                         throw new GitLabError(this.api, e.message, e.stack)
