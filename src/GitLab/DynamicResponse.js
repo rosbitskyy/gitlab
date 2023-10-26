@@ -19,9 +19,6 @@ class DynamicResponse {
         const list = singleton + 's';
         obj = {
             ...obj,
-            /**
-             * @return {Class}
-             */
             get [singleton]() {
                 return {
                     [singleton]: class extends Response {
