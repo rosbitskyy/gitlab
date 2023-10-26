@@ -23,8 +23,7 @@ class APICore extends AbstractProperties {
     /**
      * @type {[Method]}
      */
-    #methods = {
-    };
+    #methods = {};
 
     get methods() {
         return this.#methods
@@ -100,8 +99,9 @@ class APICore extends AbstractProperties {
                         if (body) _args.push(body);
                         const response = await this.request[spec.method](..._args);
                         if (response.ok) return new Class(await response.json());
+                        else if (response.statusText && response.statusText === 'OK') return new Class(response.data);
                         else {
-                            const e = await response.json();
+                            const e = response.statusText && response.data ? response.data : await response.json();
                             console.error('WARNING:', JSON.stringify({...e, url}))
                         }
                     } catch (e) {

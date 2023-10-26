@@ -1,6 +1,6 @@
 {
   "name": "gitlab-restapi",
-  "version": "1.1.2",
+  "version": "1.1.5",
   "description": "Integration with GitLab REST API",
   "main": "index.js",
   "repository": {
