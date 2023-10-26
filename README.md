@@ -69,12 +69,13 @@ console.log(job.status)
 running, failed, success, canceled, skipped, waiting_for_resource, or manual. All jobs are returned if scope is not
 provided.
 
-GitLab.Options can specify your method for fetching data:
+GitLab.Options can specify your method for fetching data. 
+For nodes 18+ - this is the own node fetch, for younger versions (unless otherwise specified) - the internal mechanism
 ```javascript
 new GitLab.Options({
     privateToken: process.env.GIT_TOKEN,
     projectId: process.env.GIT_PID,
-    fetchMethod: GitLab.Request // axios, fetch, node-fetch, etc...
+    fetchMethod: fetch // axios, fetch, node-fetch, GitLab.Request, etc...
 })
 ```
 
