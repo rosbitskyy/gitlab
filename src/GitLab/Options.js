@@ -16,7 +16,8 @@ class Options extends AbstractProperties {
     maxRetries = 5;
     privateToken = '';
     projectId = '';
-    fetchMethod = fetch // node 18.x ++
+    // default for node 18.x internal 'node:fetch' or src/GitLab/Request.js
+    fetchMethod; // <= global['fetch'];
 
     /**
      * @param {object:{}} options

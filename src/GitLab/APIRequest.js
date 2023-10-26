@@ -7,10 +7,12 @@
  * @email: rosbitskyy@gmail.com
  * @license Licensed under the MIT License (MIT)
  */
+const Request = require('./Request')
 
 class APIRequest {
 
     methods = ['get', 'head', 'delete', 'patch', 'post', 'put', 'options'];
+
     /**
      * @param {string} v
      * @return {boolean}
@@ -23,6 +25,16 @@ class APIRequest {
     constructor(api) {
         this.api = api;
         this.#makeSpecification();
+        this.#validate();
+    }
+
+    #validate() {
+        // const [major, minor, patch] = process.versions.node.split('.').map(Number)
+        const [major] = process.versions.node.split('.').map(Number)
+        if (!this.api.options.fetchMethod) {
+            if (major >= 18) this.api.options.fetchMethod = global['fetch'];
+            else this.api.options.fetchMethod = Request;
+        }
     }
 
     #makeSpecification() {

@@ -1,3 +1,13 @@
+/*
+ * =========================================================
+ *  🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 GitLab API 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦
+ * =========================================================
+ * Copyright (c) 2019-2023
+ * @Author: Rosbitskyy Ruslan
+ * @email: rosbitskyy@gmail.com
+ * @license Licensed under the MIT License (MIT)
+ */
+
 const Responses = require("./Responses");
 const Response = require("./Response");
 

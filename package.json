@@ -21,7 +21,6 @@
   "dependencies": {
   },
   "devDependencies": {
-    "node-fetch": "^2.6.1"
   },
   "scripts": {
     "test": "npm run test:classes",

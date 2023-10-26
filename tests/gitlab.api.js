@@ -14,14 +14,22 @@ const Method = require("../src/GitLab/Method");
 
 (async () => {
 
+    const [major, minor, patch] = process.versions.node.split('.').map(Number)
+    console.log('node', major, minor, patch);
+
     const gitLab = new GitLab.API(new GitLab.Options({
         privateToken: process.env.GIT_TOKEN,
         projectId: process.env.GIT_PID,
+        //fetchMethod: new GitLab.Request()
     }));
 
     // https://docs.gitlab.com/ee/api/releases/
     gitLab.add('Releases').addMethods({
-        releases: new GitLab.Method({method: 'get', class: GitLab.Responses, url: () => `projects/${gitLab.projectId}/releases`})
+        releases: new GitLab.Method({
+            method: 'get',
+            class: GitLab.Responses,
+            url: () => `projects/${gitLab.projectId}/releases`
+        })
     })
     console.log(gitLab.Releases.methods)
     const releases = await gitLab.Releases.releases(new GitLab.PaginateParams({page: 1, per_page: 20}));
@@ -51,7 +59,8 @@ const Method = require("../src/GitLab/Method");
 
     console.log(gitLab.Pipelines.methods)
     const pipelines = await gitLab.Pipelines.pipelines(new GitLab.PaginateParams({
-            page: 1, per_page: 20,  status: 'success', source: 'push',}));
+        page: 1, per_page: 20, status: 'success', source: 'push',
+    }));
     console.log(pipelines.list)
     describe('New dynamic Pipelines class', () => {
         it('Pipelines instanceof GitLab.API', () => {
