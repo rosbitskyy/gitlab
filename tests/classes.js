@@ -13,18 +13,28 @@ const {describe, it} = require("node:test");
 const {strict: assert} = require("node:assert");
 const AbstractProperties = require("../src/GitLab/AbstractProperties");
 const Method = require("../src/GitLab/Method");
+const DynamicResponse = require("../src/GitLab/DynamicResponse");
 
 (async () => {
 
     const gitLab = new GitLab.API(new GitLab.Options({}));
 
+    const GroupClasses = DynamicResponse.class('groups')
+    const ReleaseClasses = DynamicResponse.class('Releases')
+    describe('Dynamic response classes', () => {
+        it('Groups single response Class', () => assert.strictEqual(GroupClasses.Group.name, 'Group'))
+        it('Groups list responses Class', () => assert.strictEqual(GroupClasses.Groups.name, 'Groups'))
+        it('Releases single response Class', () => assert.strictEqual(ReleaseClasses.Release.name, 'Release'))
+        it('Releases list responses Class', () => assert.strictEqual(ReleaseClasses.Releases.name, 'Releases'))
+    })
+
     gitLab.add('groups').addMethods({
-        groups: new Method({method: 'get', class: GitLab.Responses, url: () => `groups`})
+        groups: new Method({method: 'get', class: GroupClasses.Groups, url: () => `groups`})
     })
     gitLab.add('Releases').addMethods({
         releases: new Method({
             method: 'get',
-            class: GitLab.Responses,
+            class: ReleaseClasses.Releases,
             url: () => `projects/${gitLab.projectId}/releases`
         })
     })

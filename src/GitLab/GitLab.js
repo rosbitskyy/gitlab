@@ -22,6 +22,7 @@ const AbstractProperties = require("./AbstractProperties");
 const Response = require("./Response");
 const Responses = require("./Responses");
 const Method = require("./Method");
+const DynamicResponse = require("./DynamicResponse");
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
@@ -31,15 +32,16 @@ class GitLab {
     static AbstractList = AbstractList;
     static AbstractKeyValue = AbstractKeyValue;
     static AbstractProperties = AbstractProperties;
+    static DynamicResponse = DynamicResponse;
     static Error = GitLabError;
-    static Options = Options;
-    static PaginateParams = PaginateParams;
     static Job = Job;
     static Jobs = Jobs;
+    static JobVariablesAttributes = JobVariablesAttributes;
+    static Method = Method;
+    static Options = Options;
+    static PaginateParams = PaginateParams;
     static Responses = Responses;
     static Response = Response;
-    static Method = Method;
-    static JobVariablesAttributes = JobVariablesAttributes;
     static Serializer = Serializer;
 }
 
