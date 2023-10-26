@@ -6,7 +6,7 @@ class DynamicResponse {
     static class(className) {
         const Classes = ({className}) => this.pipeline(
             this.withClasses({className}),
-            this.withConstructor(AbstractProperties)
+            this.withConstructor(Classes)
         )({});
         return Classes({className});
     }
