@@ -11,6 +11,7 @@ class DynamicResponse {
         return Classes({className});
     }
     static getSingletonName = (v) => {
+        v = v.capitalize();
         if (v.endsWith('s')) v = v.substring(0, v.length - 1);
         return v;
     }
