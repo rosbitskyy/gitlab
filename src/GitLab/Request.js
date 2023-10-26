@@ -43,7 +43,7 @@ class Request {
             ...(body && {headers: {...options.headers, 'Content-Length': body.length}}),
             timeout: 30000,
         }
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const req = https.request(url, options, (res) => {
                 if (res.statusCode < 200 || res.statusCode > 304) {
                     return resolve(this.#response({
