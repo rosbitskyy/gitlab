@@ -49,8 +49,9 @@ class Request {
                     return resolve(this.#response({
                         message: res.statusMessage,
                         code: res.statusCode,
+                        method: options.method,
+                        url
                     }));
-                    //return resolve(new Error(`HTTP status code ${res.statusMessage} ${res.statusCode} `))
                 }
                 const data = []
                 res.on('data', (chunk) => data.push(chunk))
