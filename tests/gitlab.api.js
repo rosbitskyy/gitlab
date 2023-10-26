@@ -20,7 +20,7 @@ const Method = require("../src/GitLab/Method");
     const gitLab = new GitLab.API(new GitLab.Options({
         privateToken: process.env.GIT_TOKEN,
         projectId: process.env.GIT_PID,
-        //fetchMethod: new GitLab.Request()
+        fetchMethod: GitLab.Request // axios, fetch, node-fetch, etc...
     }));
 
     // https://docs.gitlab.com/ee/api/releases/
