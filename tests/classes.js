@@ -27,11 +27,9 @@ const GitLab = require("../src");
         for (let v of names) {
             v = v.capitalize()
             const _classes = DynamicResponse.class(v)
-            it(v + ' single response Class', () => assert.strictEqual(_classes[DynamicResponse.getSingletonName(v)].name,
-                DynamicResponse.getSingletonName(v)))
+            it(v + ' single response Class', () => assert.strictEqual(_classes[DynamicResponse.getSingletonName(v)].name, DynamicResponse.getSingletonName(v)))
             it(v + ' instanceof GitLab.Response', () => assert.strictEqual(new _classes[DynamicResponse.getSingletonName(v)]({}) instanceof Response, true))
-            it(v + ' list responses Class', () => assert.strictEqual(_classes[DynamicResponse.getSingletonName(v) + 's'].name,
-                DynamicResponse.getSingletonName(v) + 's'))
+            it(v + ' list responses Class', () => assert.strictEqual(_classes[DynamicResponse.getSingletonName(v) + 's'].name, DynamicResponse.getSingletonName(v) + 's'))
             it(v + 's instanceof GitLab.Responses', () => assert.strictEqual(new _classes[DynamicResponse.getSingletonName(v) + 's']([], {}) instanceof Responses, true))
         }
     })
