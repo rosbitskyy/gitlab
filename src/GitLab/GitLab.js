@@ -19,6 +19,7 @@ const Serializer = require("./Serializer");
 const AbstractList = require("./AbstractList");
 const AbstractKeyValue = require("./AbstractKeyValue");
 const AbstractProperties = require("./AbstractProperties");
+const Request = require("./Request");
 const Response = require("./Response");
 const Responses = require("./Responses");
 const Method = require("./Method");
@@ -40,9 +41,16 @@ class GitLab {
     static Method = Method;
     static Options = Options;
     static PaginateParams = PaginateParams;
+    static Request = Request;
     static Responses = Responses;
     static Response = Response;
     static Serializer = Serializer;
+    static version = {
+        get node(){
+            const [major, minor, patch] = process.versions.node.split('.').map(Number)
+            return {major, minor, patch}
+        }
+    }
 }
 
 module.exports = GitLab;

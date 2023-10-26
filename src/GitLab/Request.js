@@ -22,7 +22,7 @@ class Request {
     }
 
     /**
-     * Singletone of Request
+     * Singleton of Request
      * @return {Request|*}
      */
     static getInstance() {
@@ -32,8 +32,8 @@ class Request {
 
     /**
      * @param {string} url
-     * @param {object} options
-     * @return {Promise<unknown>}
+     * @param {object:{method,headers,body}} options
+     * @return {Promise<{ok:boolean,json:function,text:function}>}
      */
     #request(url, options) {
         const {body} = options;
@@ -45,8 +45,12 @@ class Request {
         }
         return new Promise((resolve, reject) => {
             const req = https.request(url, options, (res) => {
-                if (res.statusCode < 200 || res.statusCode > 299) {
-                    return reject(new Error(`HTTP status code ${res.statusCode}`))
+                if (res.statusCode < 200 || res.statusCode > 304) {
+                    return resolve(this.#response({
+                        message: res.statusMessage,
+                        code: res.statusCode,
+                    }));
+                    //return resolve(new Error(`HTTP status code ${res.statusMessage} ${res.statusCode} `))
                 }
                 const data = []
                 res.on('data', (chunk) => data.push(chunk))
@@ -80,6 +84,11 @@ class Request {
     }
 }
 
+/**
+ * @param {string} url
+ * @param {object:{method,headers,body}} options
+ * @return {Promise<{ok:boolean,json:function,text:function}>}
+ */
 module.exports = (url, options) => {
     const r = Request.getInstance()
     const m = [(options.method || 'get').toLowerCase()]
