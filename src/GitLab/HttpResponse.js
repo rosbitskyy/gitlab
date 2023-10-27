@@ -5,9 +5,15 @@ class HttpResponse {
     code = 500;
     json = () => ({})
     text = () => ''
+    data = null;
 
     constructor(obj) {
-
+        this.ok = obj.ok;
+        this.code = obj.code;
+        this.json = obj.json;
+        this.text = obj.text;
+        this.data = obj.data;
+        this.response = obj.response;
     }
 
     /**
@@ -26,7 +32,8 @@ class HttpResponse {
             text: () => {
                 return _is ? v : JSON.stringify(v);
             },
-            data: v
+            data: v,
+            response: res,
         })
     }
 
