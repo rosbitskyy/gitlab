@@ -8,6 +8,7 @@
  * @license Licensed under the MIT License (MIT)
  */
 const Request = require('./Request')
+const HttpResponse = require("./HttpResponse");
 
 class APIRequest {
 
@@ -45,7 +46,7 @@ class APIRequest {
          */
         const execute = async (url, opts = {}) => {
             opts.headers = {...(opts.headers || {}), ...this.api.options.header.headers}
-            return await this.api.options.fetchMethod(url, opts);
+            return await this.#request(url, opts);
         }
         for (let v of this.methods) {
             if (!this.withBody(v))
@@ -55,6 +56,18 @@ class APIRequest {
                 return await execute(url, {method: v.toUpperCase(), ...(body && {body})});
             }
         }
+    }
+
+    /**
+     * @param {string} url
+     * @param {object} opts
+     * @return {Promise<{ok}|*|null>}
+     */
+    async #request(url, opts) {
+        const res = await this.api.options.fetchMethod(url, opts);
+        if (res && res.json) return res; // fetch, node-fetch
+        if (res.statusText && !!res.data) return HttpResponse.response(res.data, res); // axios
+        return res; // other
     }
 }
 

@@ -8,6 +8,7 @@
  * @license Licensed under the MIT License (MIT)
  */
 const https = require('https')
+const HttpResponse = require("./HttpResponse");
 
 class Request {
 
@@ -45,22 +46,22 @@ class Request {
         }
         return new Promise((resolve) => {
             const req = https.request(url, options, (res) => {
-                if (res.statusCode < 200 || res.statusCode > 304) {
-                    return resolve(this.#response({
+                if (Request.isGood(res)) {
+                    return resolve(Request.response({
                         message: res.statusMessage,
                         code: res.statusCode,
                         method: options.method,
                         url
-                    }));
+                    }, res));
                 }
                 const data = []
                 res.on('data', (chunk) => data.push(chunk))
                 res.on('end', () => {
-                    resolve(this.#response(Buffer.concat(data).toString()))
+                    resolve(Request.response(Buffer.concat(data).toString(), res))
                 })
             })
             req.on('error', (err) => {
-                resolve(this.#response(err))
+                resolve(Request.response(err, {statusCode: 500}))
             })
             req.on('timeout', () => {
                 req.destroy()
@@ -71,17 +72,21 @@ class Request {
         })
     }
 
-    #response(v) {
-        const isString = !!v && v.constructor === ''.constructor
-        return {
-            ok: isString,
-            json: () => {
-                return isString ? JSON.parse(v) : v;
-            },
-            text: () => {
-                return isString ? v : JSON.stringify(v);
-            }
-        }
+    /**
+     * @param {{statusCode:number,code:number}|https.IncomingMessage} res
+     * @return {boolean}
+     */
+    static isGood = (res) => {
+        return HttpResponse.isGood(res)
+    }
+
+    /**
+     * @param {string|object} v
+     * @param {{statusCode:number,code:number}|https.IncomingMessage} res
+     * @return {{code: number, json: (function(): any), text: (function(): *|string), ok: boolean}}
+     */
+    static response(v, res) {
+        return HttpResponse.response(v, res)
     }
 }
 
