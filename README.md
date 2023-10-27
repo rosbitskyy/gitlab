@@ -70,12 +70,13 @@ running, failed, success, canceled, skipped, waiting_for_resource, or manual. Al
 provided.
 
 GitLab.Options can specify your method for fetching data. 
-For nodes 18+ - this is the own node fetch, for younger versions (unless otherwise specified) - the internal mechanism
+For nodes 18+ - this is the own node fetch, for younger versions 
+(unless otherwise specified) - the internal mechanism
 ```javascript
 new GitLab.Options({
     privateToken: process.env.GIT_TOKEN,
     projectId: process.env.GIT_PID,
-    fetchMethod: fetch // axios, fetch, node-fetch, GitLab.Request, etc...
+    fetchMethod: fetch // axios, fetch, node-fetch, GitLab.Request (tested)
 })
 ```
 
@@ -143,13 +144,13 @@ Add your own method that is not yet implemented by this api
 - [Take, for example, Groups](https://docs.gitlab.com/ee/api/groups.html)
 
 ```javascript
-gitLab.add('groups').addMethods({
+gitLab.add('MyGroups').addMethods({
     groups: new GitLab.Method({method: 'get', class: GitLab.Responses, 
         url: () => `groups`})
 })
-console.log(gitLab.Groups.methods)
+console.log(gitLab.MyGroups.methods)
 
-const groups = await gitLab.Groups.groups(
+const groups = await gitLab.MyGroups.groups(
     new GitLab.PaginateParams({page: 2, per_page: 20}));
 console.log(groups.list)
 ```
@@ -157,13 +158,13 @@ console.log(groups.list)
 [Releases](https://docs.gitlab.com/ee/api/releases/)
 
 ```javascript
-gitLab.add('Releases').addMethods({
+gitLab.add('MyReleases').addMethods({
     releases: new GitLab.Method({method: 'get', class: GitLab.Responses, 
         url: () => `projects/${gitLab.projectId}/releases`})
 })
-console.log(gitLab.Releases.methods)
+console.log(gitLab.MyReleases.methods)
 
-const releases = await gitLab.Releases.releases(new GitLab.PaginateParams({page: 2, per_page: 20}));
+const releases = await gitLab.MyReleases.releases(new GitLab.PaginateParams({page: 2, per_page: 20}));
 console.log(releases.list)
 ```
 
