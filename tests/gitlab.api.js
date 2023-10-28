@@ -35,7 +35,7 @@ const Method = require("../src/GitLab/Method");
     const releases = await gitLab.Releases.releases(new GitLab.PaginateParams({page: 1, per_page: 20}));
     console.log(releases.list)
     describe('New dynamic Releases class', () => {
-        it('Releases instanceof GitLab.API', () => {
+        it('Releases instanceof GitLab.Responses', () => {
             assert.strictEqual(releases instanceof GitLab.Responses, true);
         })
         it('Groups count', () => {
@@ -49,7 +49,7 @@ const Method = require("../src/GitLab/Method");
     console.log(gitLab.Groups.methods)
     const groups = await gitLab.Groups.groups(new GitLab.PaginateParams({page: 1, per_page: 20}));
     describe('New dynamic Groups class', () => {
-        it('Groups instanceof GitLab.API', () => {
+        it('Groups instanceof GitLab.Responses', () => {
             assert.strictEqual(groups instanceof GitLab.Responses, true);
         })
         it('Groups count', () => {
@@ -63,7 +63,7 @@ const Method = require("../src/GitLab/Method");
     }));
     console.log(pipelines.list)
     describe('New dynamic Pipelines class', () => {
-        it('Pipelines instanceof GitLab.API', () => {
+        it('Pipelines instanceof GitLab.Responses', () => {
             assert.strictEqual(pipelines instanceof GitLab.Responses, true);
         })
         it('Pipelines count 20', () => {
@@ -74,7 +74,7 @@ const Method = require("../src/GitLab/Method");
     const pipelinelatest = await gitLab.Pipelines.latest();
     console.log(pipelinelatest)
     describe('New dynamic Pipelines class', () => {
-        it('Pipeline instanceof GitLab.API', () => {
+        it('Pipeline instanceof GitLab.Response', () => {
             assert.strictEqual(pipelinelatest instanceof GitLab.Response, true);
         })
     })

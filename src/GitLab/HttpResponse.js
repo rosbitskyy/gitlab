@@ -7,37 +7,31 @@ class HttpResponse extends AbstractProperties {
     json = () => ({})
     text = () => ''
     data = null;
-    response;
 
     constructor(obj) {
         super();
-        if (obj.response) this.setProperties(obj.response, this, false)
+        if (obj.IncomingMessage) this.setProperties(obj.IncomingMessage, this, false)
         this.ok = obj.ok;
         this.status = obj.status;
         this.json = obj.json;
         this.text = obj.text;
         this.data = obj.data;
-        this.response = obj.response;
     }
 
     /**
      * @param {string|object} v
      * @param {{statusCode:number,status:number}|https.IncomingMessage} res
-     * @return {HttpResponse}
+     * @return {HttpResponse|https.IncomingMessage}
      */
     static response(v, res) {
         const _is = !!v && v.constructor === ''.constructor
         return new HttpResponse({
             status: res.statusCode || res.status,
             ok: HttpResponse.isGood(res),
-            json: () => {
-                return _is ? JSON.parse(v) : v;
-            },
-            text: () => {
-                return _is ? v : JSON.stringify(v);
-            },
+            json: () => _is ? JSON.parse(v) : v,
+            text: () => _is ? v : JSON.stringify(v),
             data: v,
-            response: res,
+            IncomingMessage: res,
         })
     }
 
