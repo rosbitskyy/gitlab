@@ -49,7 +49,7 @@ class Request {
                 if (!Request.isGood(res)) {
                     return resolve(Request.response({
                         message: res.statusMessage,
-                        code: res.statusCode,
+                        statusCode: res.statusCode,
                         method: options.method,
                         url
                     }, res));

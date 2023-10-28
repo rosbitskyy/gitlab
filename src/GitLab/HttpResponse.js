@@ -16,6 +16,7 @@ class HttpResponse extends AbstractProperties {
         this.json = obj.json;
         this.text = obj.text;
         this.data = obj.data;
+        this.clear()
     }
 
     /**
