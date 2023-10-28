@@ -3,6 +3,7 @@
 [![os, nodes](https://github.com/rosbitskyy/gitlab/actions/workflows/push-main.yml/badge.svg)](https://github.com/rosbitskyy/gitlab/actions)
 [![npm version](https://img.shields.io/npm/v/gitlab-restapi.svg)](https://www.npmjs.com/package/gitlab-restapi)
 [![Downloads/month](https://img.shields.io/npm/dm/gitlab-restapi.svg)](http://www.npmtrends.com/gitlab-restapi)
+[![Vulnerabilities](https://snyk.io/test/npm/gitlab-restapi/badge.svg)](https://snyk.io/test/npm/gitlab-restapi)
 
 The module allows you to perform the list of methods described in the GitLab service documentation in the section
 [Jobs](https://docs.gitlab.com/ee/api/jobs.html) , [Pipelines](https://docs.gitlab.com/ee/api/pipelines.html#list-project-pipelines) (
