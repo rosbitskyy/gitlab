@@ -1,15 +1,19 @@
 const https = require('https')
+const AbstractProperties = require("./AbstractProperties");
 
-class HttpResponse {
+class HttpResponse extends AbstractProperties {
     ok = false;
-    code = 500;
+    status = 500;
     json = () => ({})
     text = () => ''
     data = null;
+    response;
 
     constructor(obj) {
+        super();
+        if (obj.response) this.setProperties(obj.response, this, false)
         this.ok = obj.ok;
-        this.code = obj.code;
+        this.status = obj.status;
         this.json = obj.json;
         this.text = obj.text;
         this.data = obj.data;
@@ -18,13 +22,13 @@ class HttpResponse {
 
     /**
      * @param {string|object} v
-     * @param {{statusCode:number,code:number}|https.IncomingMessage} res
-     * @return {{code: number, json: (function(): any), text: (function(): *|string), ok: boolean}}
+     * @param {{statusCode:number,status:number}|https.IncomingMessage} res
+     * @return {HttpResponse}
      */
     static response(v, res) {
         const _is = !!v && v.constructor === ''.constructor
         return new HttpResponse({
-            code: res.statusCode || res.code,
+            status: res.statusCode || res.status,
             ok: HttpResponse.isGood(res),
             json: () => {
                 return _is ? JSON.parse(v) : v;
@@ -38,11 +42,11 @@ class HttpResponse {
     }
 
     /**
-     * @param {{statusCode:number,code:number}|https.IncomingMessage} res
+     * @param {{statusCode:number,status:number}|https.IncomingMessage} res
      * @return {boolean}
      */
     static isGood = (res) => {
-        const code = res.statusCode || res.code || 500;
+        const code = res.statusCode || res.status || 500;
         return code >= 200 && code <= 304;
     }
 }

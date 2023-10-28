@@ -46,7 +46,7 @@ class Request {
         }
         return new Promise((resolve) => {
             const req = https.request(url, options, (res) => {
-                if (Request.isGood(res)) {
+                if (!Request.isGood(res)) {
                     return resolve(Request.response({
                         message: res.statusMessage,
                         code: res.statusCode,
@@ -73,7 +73,7 @@ class Request {
     }
 
     /**
-     * @param {{statusCode:number,code:number}|https.IncomingMessage} res
+     * @param {{statusCode:number,status:number}|https.IncomingMessage} res
      * @return {boolean}
      */
     static isGood = (res) => {
@@ -82,8 +82,8 @@ class Request {
 
     /**
      * @param {string|object} v
-     * @param {{statusCode:number,code:number}|https.IncomingMessage} res
-     * @return {{code: number, json: (function(): any), text: (function(): *|string), ok: boolean}}
+     * @param {{statusCode:number,status:number}|https.IncomingMessage} res
+     * @return {HttpResponse}
      */
     static response(v, res) {
         return HttpResponse.response(v, res)
