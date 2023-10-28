@@ -87,6 +87,7 @@ const GitLab = require("gitlab-restapi");
 const gitLab = new GitLab.API(new GitLab.Options({
     privateToken: process.env.GIT_TOKEN,
     projectId: process.env.GIT_PID,
+    fetchMethod: fetch // axios, fetch, node-fetch, GitLab.Request (tested)
 }));
 console.log(gitLab.Jobs.methods)
 
