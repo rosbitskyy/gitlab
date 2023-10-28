@@ -84,9 +84,10 @@ class BaseSerializer extends Normaliser {
     /**
      * @param {string|object} serializedJsonString
      * @param {Object} ClassType
+     * @param {boolean} ownPropertyOnly
      * @return {object}
      */
-    static deserialize(serializedJsonString, ClassType = null) {
+    static deserialize(serializedJsonString, ClassType = null, ownPropertyOnly = true) {
         const json = typeof serializedJsonString === 'string' ? JSON.parse(serializedJsonString) : serializedJsonString;
         if (!ClassType && !json.serialized) throw new Error(' 🇺🇦 A ClassType argument (deserialize(serializedJsonString, ClassType) ' +
             'or {serialized: ClassName} parameter was expected in the serialized json object structure. ' +
@@ -98,7 +99,7 @@ class BaseSerializer extends Normaliser {
         } catch (e) {
         }
         for (let key of Object.keys(json))
-            if (ClassType && object.hasOwnProperty(key)) object[key] = json[key];
+            if (ClassType && (object.hasOwnProperty(key) || !ownPropertyOnly)) object[key] = json[key];
             else if (!ClassType && key !== 'serialized') object[key] = json[key];
         return this.normalize(object);
     }
