@@ -74,10 +74,9 @@ const GitLab = require("../src");
             assert.strictEqual(jobs.list.length, 2);
         })
         it('Jobs has own properties from AbstractList and AbstractProperties', () => {
-            const ap = new AbstractProperties();
-            const props = new Set(ap.getOwnPropertyOf(new GitLab.AbstractList())
-                .concat(ap.getOwnPropertyOf(ap.clear())))
-            const jp = new AbstractProperties().getOwnPropertyOf(jobs)
+            const props = new Set(jobs.getOwnPropertyOf(new GitLab.AbstractList())
+                .concat(jobs.getOwnPropertyOf(new AbstractProperties())))
+            const jp = jobs.getOwnPropertyOf(jobs)
             assert.strictEqual(props.size, jp.length);
         })
         it('Jobs - find and findOne', () => {
