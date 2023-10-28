@@ -19,9 +19,8 @@ const GitLab = require("../src");
 
 (async () => {
 
-    const node16fetch = GitLab.Request;
     const opts = {method: 'post', headers: {'Content-Type': 'application/json'}}
-    const response = await node16fetch('https://maps.googleapis.com/maps/api/geocode/json?address=google', opts);
+    const response = await GitLab.Request('https://maps.googleapis.com/maps/api/geocode/json?address=google', opts);
     const json = await response.json()
     console.log(json)
     describe('Node.js 16.x - Replacement of the missing node 16 fetch by own GitLab.Request', () => {
