@@ -68,6 +68,7 @@ class AbstractProperties {
 
     clear() {
         for (let v of ['getOwnPropertyOf', 'copyProperties', 'getOwnPropertyOf', 'formatDate']) delete this[v];
+        return this;
     }
 }
 
