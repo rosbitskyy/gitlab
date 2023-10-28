@@ -107,7 +107,6 @@ class APICore extends AbstractProperties {
                     } catch (e) {
                         throw new GitLabError(this.api, e.message, e.stack)
                     }
-                    return null;
                 }
             })
         }

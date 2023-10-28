@@ -14,7 +14,7 @@ const Response = require("./Response");
 class DynamicResponse {
     /**
      * @typedef {import('../types/DynamicResponse').Classes}
-     * @return {Classes}
+     * @return {Object}
      */
     static class(className) {
         const Classes = ({className}) => this.pipeline(
