@@ -1,5 +1,6 @@
 const https = require('https')
 const AbstractProperties = require("./AbstractProperties");
+const Serializer = require("./Serializer");
 
 class HttpResponse extends AbstractProperties {
     ok = false;
@@ -48,11 +49,14 @@ class HttpResponse extends AbstractProperties {
     }
 
     static getHeaders(res) {
-        const rv = {}
-        if (res && res.rawHeaders && res.rawHeaders instanceof Array) {
-            for (let i = 0; i < res.rawHeaders.length; i += 2) {
-                rv[res.rawHeaders[i]] = res.rawHeaders[i + 1];
+        if (res.headers) return res.headers;
+        let rv =  {}
+        let rawHeaders = res.rawHeaders || (res.res || {}).rawHeaders;
+        if (res && rawHeaders && rawHeaders instanceof Array) {
+            for (let i = 0; i < rawHeaders.length; i += 2) {
+                rv[rawHeaders[i]] = rawHeaders[i + 1];
             }
+            rv = Serializer.normalize(rv)
         }
         return rv;
     }
