@@ -7,6 +7,7 @@ class HttpResponse extends AbstractProperties {
     json = () => ({})
     text = () => ''
     data = null;
+    headers = {};
 
     constructor(obj) {
         super();
@@ -16,6 +17,7 @@ class HttpResponse extends AbstractProperties {
         this.json = obj.json;
         this.text = obj.text;
         this.data = obj.data;
+        this.headers = HttpResponse.getHeaders(obj.IncomingMessage)
         this.clear()
     }
 
@@ -43,6 +45,16 @@ class HttpResponse extends AbstractProperties {
     static isGood = (res) => {
         const code = res.statusCode || res.status || 500;
         return code >= 200 && code <= 304;
+    }
+
+    static getHeaders(res) {
+        const rv = {}
+        if (res && res.rawHeaders && res.rawHeaders instanceof Array) {
+            for (let i = 0; i < res.rawHeaders.length; i += 2) {
+                rv[res.rawHeaders[i]] = res.rawHeaders[i + 1];
+            }
+        }
+        return rv;
     }
 }
 

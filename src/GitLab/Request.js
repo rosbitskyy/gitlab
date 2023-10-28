@@ -73,7 +73,7 @@ class Request {
     }
 
     /**
-     * @param {{statusCode:number,status:number}|https.IncomingMessage} res
+     * @param {object} res
      * @return {boolean}
      */
     static isGood = (res) => {
@@ -82,7 +82,7 @@ class Request {
 
     /**
      * @param {string|object} v
-     * @param {{statusCode:number,status:number}|https.IncomingMessage} res
+     * @param {object} res
      * @return {HttpResponse}
      */
     static response(v, res) {
