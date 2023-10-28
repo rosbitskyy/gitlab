@@ -14,7 +14,7 @@ const AbstractKeyValue = require("./AbstractKeyValue");
 
 class JobVariablesAttributes {
     /**
-     * @type {AbstractList<AbstractKeyValue>}
+     * @type {AbstractList<AbstractKeyValue>|Array<AbstractKeyValue>}
      */
     job_variables_attributes = new AbstractList();
 

@@ -21,6 +21,9 @@ class PaginateParams extends AbstractProperties {
     status = new AbstractList();
     source = new AbstractList();
 
+    /**
+     * @param {Object} params
+     */
     constructor(params) {
         super()
         this.setProperties(params, this, false)

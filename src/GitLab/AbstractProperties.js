@@ -53,6 +53,7 @@ class AbstractProperties {
 
     /**
      * @param {any} source
+     * @return {void}
      */
     copyProperties(source) {
         const ownProperties = this.getOwnPropertyOf(this)

@@ -61,7 +61,7 @@ class APIRequest {
     /**
      * @param {string} url
      * @param {object} opts
-     * @return {Promise<{ok}|*|null>}
+     * @return {Promise<Object|HttpResponse|null>}
      */
     async #request(url, opts) {
         const res = await this.api.options.fetchMethod(url, opts);

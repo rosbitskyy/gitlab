@@ -21,7 +21,7 @@ class APICore extends AbstractProperties {
     api
 
     /**
-     * @type {[Method]}
+     * @type {Object}
      */
     #methods = {};
 
@@ -31,7 +31,7 @@ class APICore extends AbstractProperties {
 
     /**
      * @deprecated
-     * @return {Method[]}
+     * @return {Object}
      */
     get uri() {
         return this.#methods

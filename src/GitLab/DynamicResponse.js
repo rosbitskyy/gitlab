@@ -12,6 +12,10 @@ const Responses = require("./Responses");
 const Response = require("./Response");
 
 class DynamicResponse {
+    /**
+     * @typedef {import('../types/DynamicResponse').Classes}
+     * @return {Classes}
+     */
     static class(className) {
         const Classes = ({className}) => this.pipeline(
             this.withClasses({className}),
@@ -19,6 +23,7 @@ class DynamicResponse {
         )({});
         return Classes({className});
     }
+
     static getSingletonName = (v) => {
         v = v.capitalize();
         if (v.endsWith('s')) v = v.substring(0, v.length - 1);
