@@ -15,7 +15,6 @@ class Responses extends AbstractProperties {
     constructor(list, responseClass = Response) {
         super();
         this.setProperties(new AbstractList(list), this.#list, false, responseClass)
-        this.clear()
     }
 
     /**
