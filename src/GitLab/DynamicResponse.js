@@ -61,7 +61,7 @@ class DynamicResponse {
 
     /**
      * pipeline
-     * @param {function} methods
+     * @param {function[]} methods
      * @returns {function(*): *}
      */
     static pipeline = (...methods) => (defaults = {}) => methods.reduce((props, method) => method(props), defaults);
