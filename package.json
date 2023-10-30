@@ -27,6 +27,7 @@
   },
   "scripts": {
     "test": "npm run test:mocha",
-    "test:mocha": "nyc --reporter=html --reporter=text mocha tests/**/*.js"
+    "test:mocha": "nyc --reporter=html --reporter=text mocha tests/**/*.js",
+    "test:report": "nyc --reporter=html --reporter=text mocha tests/**/*.js"
   }
 }
