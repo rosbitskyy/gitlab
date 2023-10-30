@@ -19,9 +19,9 @@ declare class GitLab {
     static Serializer: typeof Serializer;
     static version: {
         readonly node: {
-            major: any;
-            minor: any;
-            patch: any;
+            major: number;
+            minor: number;
+            patch: number;
         };
     };
 }

@@ -46,6 +46,9 @@ class GitLab {
     static Response = Response;
     static Serializer = Serializer;
     static version = {
+        /**
+         * @return {{patch: number, major: number, minor: number}}
+         */
         get node(){
             const [major, minor, patch] = process.versions.node.split('.').map(Number)
             return {major, minor, patch}
