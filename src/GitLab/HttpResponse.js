@@ -1,4 +1,3 @@
-const https = require('https')
 const AbstractProperties = require("./AbstractProperties");
 const Serializer = require("./Serializer");
 
