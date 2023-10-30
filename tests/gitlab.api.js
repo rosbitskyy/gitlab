@@ -27,7 +27,6 @@ require('dotenv').config();
 
 
     const releases = await gitLab.Releases.releases(new GitLab.PaginateParams({page: 1, per_page: 20}));
-    console.log(releases.list)
     await describe('New dynamic Releases class', () => {
         it('Releases instanceof GitLab.Responses', () => {
             assert.strictEqual(releases instanceof GitLab.Responses, true);
@@ -40,7 +39,6 @@ require('dotenv').config();
     gitLab.add('groups').addMethods({
         groups: new Method({method: 'get', class: GitLab.Responses, url: () => `groups`})
     })
-    console.log(gitLab.Groups.methods)
     const groups = await gitLab.Groups.groups(new GitLab.PaginateParams({page: 1, per_page: 20}));
     await describe('New dynamic Groups class', () => {
         it('Groups instanceof GitLab.Responses', () => {
@@ -79,13 +77,13 @@ require('dotenv').config();
     const apimethods = gitLab.getOwnPropertyNames();
     for (let am of apimethods) {
         const coremethods = gitLab[am].methods;
-        for (let m of Object.keys(coremethods)) {
-            await describe('Statement ' + am + ' of API', () => {
-                it(am + 'core method ' + m, () => {
+        await describe('Statement ' + am + ' of API', () => {
+            for (let m of Object.keys(coremethods)) {
+                it('method ' + m, () => {
                     assert.strictEqual(gitLab[am][m] instanceof Object, true);
                 })
-            })
-        }
+            }
+        })
     }
 
 
