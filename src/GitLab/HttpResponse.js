@@ -40,7 +40,7 @@ class HttpResponse extends AbstractProperties {
     }
 
     /**
-     * @param {{statusCode:number,status:number}|https.IncomingMessage} res
+     * @param {{statusCode?:number,status?:number}|https.IncomingMessage} res
      * @return {boolean}
      */
     static isGood = (res) => {

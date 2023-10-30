@@ -2,12 +2,12 @@ export = HttpResponse;
 
 declare class HttpResponse extends AbstractProperties {
     /**
-     * @param {{statusCode:number,status:number}} res
+     * @param {{statusCode?:number,status?:number}} res
      * @return {boolean}
      */
     static isGood: (res: {
-        statusCode: number;
-        status: number;
+        statusCode?: number;
+        status?: number;
     }) => boolean;
     ok: boolean;
     status: number;
