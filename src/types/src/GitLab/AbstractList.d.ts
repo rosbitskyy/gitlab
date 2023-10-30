@@ -1,7 +1,10 @@
 export = AbstractList
 
 declare class AbstractList extends Array<any> {
-    constructor(v: any);
+    /**
+     * @param {Array|null} v
+     */
+    constructor(v: Array<any> | null);
 
     /**
      * @param {object} filter

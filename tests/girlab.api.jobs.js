@@ -7,7 +7,7 @@
  * @email: rosbitskyy@gmail.com
  * @license Licensed under the MIT License (MIT)
  */
-const GitLab = require("../");
+const GitLab = require("../src/");
 const {describe, it} = require("node:test");
 const {strict: assert} = require("node:assert");
 

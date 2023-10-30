@@ -9,6 +9,9 @@
  */
 
 class AbstractList extends Array {
+    /**
+     * @param {Array|null} v
+     */
     constructor(v) {
         if (v instanceof Array) super(...v); else super();
     }
