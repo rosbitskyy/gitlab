@@ -35,7 +35,7 @@ require('dotenv').config();
     console.log(gitLab.Releases.methods)
     const releases = await gitLab.Releases.releases(new GitLab.PaginateParams({page: 1, per_page: 20}));
     console.log(releases.list)
-    describe('New dynamic Releases class', () => {
+    await describe('New dynamic Releases class', () => {
         it('Releases instanceof GitLab.Responses', () => {
             assert.strictEqual(releases instanceof GitLab.Responses, true);
         })
@@ -49,7 +49,7 @@ require('dotenv').config();
     })
     console.log(gitLab.Groups.methods)
     const groups = await gitLab.Groups.groups(new GitLab.PaginateParams({page: 1, per_page: 20}));
-    describe('New dynamic Groups class', () => {
+    await describe('New dynamic Groups class', () => {
         it('Groups instanceof GitLab.Responses', () => {
             assert.strictEqual(groups instanceof GitLab.Responses, true);
         })
@@ -63,7 +63,7 @@ require('dotenv').config();
         page: 1, per_page: 20, status: 'success', source: 'push',
     }));
     console.log(pipelines.list)
-    describe('New dynamic Pipelines class', () => {
+    await describe('New dynamic Pipelines class', () => {
         it('Pipelines instanceof GitLab.Responses', () => {
             assert.strictEqual(pipelines instanceof GitLab.Responses, true);
         })
@@ -74,7 +74,7 @@ require('dotenv').config();
 
     const pipelinelatest = await gitLab.Pipelines.latest();
     console.log(pipelinelatest)
-    describe('New dynamic Pipelines class', () => {
+    await describe('New dynamic Pipelines class', () => {
         it('Pipeline instanceof GitLab.Response', () => {
             assert.strictEqual(pipelinelatest instanceof GitLab.Response, true);
         })

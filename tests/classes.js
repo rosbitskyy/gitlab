@@ -21,14 +21,14 @@ const HttpResponse = require("../src/GitLab/HttpResponse");
 (async () => {
 
     const ap = new AbstractProperties()
-    describe('AbstractProperties class', () => {
+    await describe('AbstractProperties class', () => {
         it('properties list len', () => assert.equal(ap.getOwnPropertyOf(ap).length > 8, true))
         it('string result of formatDate', () => assert.equal(typeof ap.formatDate(new Date()), 'string'))
         it('Array result of getOwnPropertyOf', () => assert.equal(ap.getOwnPropertyOf(ap) instanceof Array, true))
     })
 
     const resp = new Response({test: 'true', date: new Date()})
-    describe('Serializer class', () => {
+    await describe('Serializer class', () => {
         const seril = GitLab.Serializer.serialize(resp)
         it('Serialized typeof string', () => assert.strictEqual(typeof seril, 'string'))
         const deser = GitLab.Serializer.deserialize(seril, Response, false)
@@ -41,7 +41,7 @@ const HttpResponse = require("../src/GitLab/HttpResponse");
     const response = await GitLab.Request('https://maps.googleapis.com/maps/api/geocode/json?address=google', opts);
     const json = await response.json()
     console.log(json)
-    describe('GitLab.Request - Node.js 16.x - Replacement of the missing node 16 fetch', () => {
+    await describe('GitLab.Request - Node.js 16.x - Replacement of the missing node 16 fetch', () => {
         it('HttpResponse', () => assert.equal(response instanceof HttpResponse, true))
         it('response has json function', () => assert.equal(!!response.json, true))
         it('test Google api key response', () => assert.equal(json.status, 'REQUEST_DENIED'))
@@ -50,7 +50,7 @@ const HttpResponse = require("../src/GitLab/HttpResponse");
     const gitLab = new GitLab.API(new GitLab.Options({fetchMethod: GitLab.Request}));
 
     const names = ['groups', 'Releases'];
-    describe('Dynamic response classes', () => {
+    await describe('Dynamic response classes', () => {
         for (let v of names) {
             v = DynamicResponse.getSingletonName(v)
             const _classes = DynamicResponse.class(v)
@@ -83,7 +83,7 @@ const HttpResponse = require("../src/GitLab/HttpResponse");
 
 
     for (let a of gitLab.getOwnPropertyNames()) {
-        describe(a + ' API class', () => {
+        await describe(a + ' API class', () => {
             it('instanceof AbstractProperties', () => assert.strictEqual(gitLab[a] instanceof AbstractProperties, true))
             for (let k of Object.keys(gitLab[a].methods)) {
                 it(a + '.' + k, () => assert.strictEqual(gitLab[a].methods[k] instanceof Method, true))
@@ -95,7 +95,7 @@ const HttpResponse = require("../src/GitLab/HttpResponse");
     const pipelines = new GitLab.Responses(variables.pipelines)
 
 
-    describe('Jobs API class', () => {
+    await describe('Jobs API class', () => {
         it('count 2', () => {
             assert.strictEqual(jobs.list.length, 2);
         })

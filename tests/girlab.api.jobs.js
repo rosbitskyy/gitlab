@@ -30,7 +30,7 @@ require('dotenv').config();
     }
     console.log('erased:', erasedJobs.list)
 
-    describe('New Jobs class', () => {
+    await describe('New Jobs class', () => {
         it('Jobs instanceof GitLab.Jobs', () => {
             assert.strictEqual(jobs instanceof GitLab.Jobs, true);
         })
