@@ -10,6 +10,7 @@
 const GitLab = require("../src/");
 const {describe, it} = require("node:test");
 const {strict: assert} = require("node:assert");
+require('dotenv').config();
 
 (async () => {
 
