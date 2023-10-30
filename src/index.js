@@ -7,4 +7,4 @@
  * @email: rosbitskyy@gmail.com
  * @license Licensed under the MIT License (MIT)
  */
-module.exports = require('./GitLab')
+module.exports = require('./GitLab/')

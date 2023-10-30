@@ -15,7 +15,7 @@ const Response = require("../src/GitLab/Response");
 const Responses = require("../src/GitLab/Responses");
 const Method = require("../src/GitLab/Method");
 const DynamicResponse = require("../src/GitLab/DynamicResponse");
-const GitLab = require("../src");
+const GitLab = require("../index");
 const HttpResponse = require("../src/GitLab/HttpResponse");
 
 (async () => {
