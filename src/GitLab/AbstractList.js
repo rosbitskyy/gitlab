@@ -12,7 +12,7 @@ class AbstractList extends Array {
     /**
      * @param {Array|null} v
      */
-    constructor(v) {
+    constructor(v = null) {
         if (v instanceof Array) super(...v); else super();
     }
 
