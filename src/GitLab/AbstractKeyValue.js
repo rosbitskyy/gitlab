@@ -1,4 +1,4 @@
-/*
+/**
  * =========================================================
  *  🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 GitLab API 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦
  * =========================================================
@@ -15,18 +15,25 @@ class AbstractKeyValue {
      */
     key;
     /**
-     * @type {any}
+     * @type {object|string|number|null|Date}
      */
     value;
 
     /**
-     * @param {string} key
-     * @param {any} value
+     * @param {string} k
+     * @param {object|string|number|null|Date} v
      */
-    constructor(key, value) {
-        this.key = key;
-        this.value = value;
+    constructor(k, v) {
+        /* istanbul ignore next */
+        this.key = k;
+        /* istanbul ignore next */
+        this.value = v;
+    }
+
+    /* istanbul ignore next */
+    get() {
+        return {[this.key]: this.value};
     }
 }
 
-module.exports = AbstractKeyValue
+module.exports = AbstractKeyValue;

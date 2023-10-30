@@ -17,6 +17,7 @@ const Method = require("../src/GitLab/Method");
 const DynamicResponse = require("../src/GitLab/DynamicResponse");
 const GitLab = require("../index");
 const HttpResponse = require("../src/GitLab/HttpResponse");
+const JobVariablesAttributes = require("../src/GitLab/JobVariablesAttributes");
 
 (async () => {
 
@@ -35,6 +36,13 @@ const HttpResponse = require("../src/GitLab/HttpResponse");
         it('deserialized instanceof Response', () => assert.strictEqual(deser instanceof Response, true))
         it('deserialized prop test is boolean', () => assert.strictEqual(deser.test, true))
         it('deserialized prop date is Date', () => assert.strictEqual(deser.date instanceof Date, true))
+    })
+
+    const jobVariablesAttributes = new JobVariablesAttributes();
+    jobVariablesAttributes.add('a', 'b');
+    jobVariablesAttributes.push('b', 's')
+    await describe('JobVariablesAttributes class', () => {
+        it('JobVariablesAttributes', () => assert.equal(typeof jobVariablesAttributes.toString(), 'string'))
     })
 
     const opts = {method: 'post', headers: {'Content-Type': 'application/json'}}

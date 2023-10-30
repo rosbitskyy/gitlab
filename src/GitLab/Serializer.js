@@ -98,12 +98,13 @@ class BaseSerializer extends Normaliser {
             object = new Class();
         } catch (e) {
         }
+        const copy = (s, t, k) => t[k] = s[k];
         for (let key of Object.keys(json))
-            if (ClassType && (object.hasOwnProperty(key) || !ownPropertyOnly)) object[key] = json[key];
-            else if (!ClassType && key !== 'serialized') object[key] = json[key];
+            if ((ClassType && (object.hasOwnProperty(key) || !ownPropertyOnly)) ||
+                (!ClassType && key !== 'serialized')) copy(json, object, key);
+        /* istanbul ignore next */
         return this.normalize(object);
     }
-
 }
 
 class Serializer extends BaseSerializer {

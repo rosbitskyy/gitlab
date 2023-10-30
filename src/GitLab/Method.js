@@ -23,10 +23,12 @@ class Method {
     url;
 
     /**
-     * @param {object:{}} props
+     * @param {object:{method:string,class:object,url:Object|Function}} props
      */
     constructor(props) {
-        for (let key of Object.keys(props)) if (this.hasOwnProperty(key)) this[key] = props[key];
+        for (let key of Object.keys(props))
+            /* istanbul ignore next */
+            if (this.hasOwnProperty(key)) this[key] = props[key];
     }
 }
 

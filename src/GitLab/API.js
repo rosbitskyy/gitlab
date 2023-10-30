@@ -22,8 +22,8 @@ class API extends AbstractProperties {
 
     options = new Options({})
 
-    getOwnPropertyNames(){
-        return Object.getOwnPropertyNames(this).filter(it=> this[it] instanceof APICore)
+    getOwnPropertyNames() {
+        return Object.getOwnPropertyNames(this).filter(it => this[it] instanceof APICore)
     }
 
     get projectId() {
@@ -58,7 +58,7 @@ class API extends AbstractProperties {
             log: new Method({
                 method: 'get',
                 class: Response,
-                url: (job_id) => `projects/${this.projectId}/jobs/${job_id}/trace`
+                url: (job_id) => 'projects/' + this.projectId + '/jobs/' + job_id + 'trace'
             }),
             trace: new Method({
                 method: 'get',

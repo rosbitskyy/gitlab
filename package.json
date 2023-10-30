@@ -22,10 +22,11 @@
   "devDependencies": {
     "dotenv": "^16.3.1",
     "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
     "typescript": "^5.2.2"
   },
   "scripts": {
     "test": "npm run test:mocha",
-    "test:mocha": "mocha tests/**/*.js"
+    "test:mocha": "nyc --reporter=html --reporter=text mocha tests/**/*.js"
   }
 }
