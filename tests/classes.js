@@ -15,7 +15,7 @@ const Response = require("../src/GitLab/Response");
 const Responses = require("../src/GitLab/Responses");
 const Method = require("../src/GitLab/Method");
 const DynamicResponse = require("../src/GitLab/DynamicResponse");
-const GitLab = require("../index");
+const GitLab = require("../src/");
 const HttpResponse = require("../src/GitLab/HttpResponse");
 const JobVariablesAttributes = require("../src/GitLab/JobVariablesAttributes");
 
@@ -53,14 +53,23 @@ const JobVariablesAttributes = require("../src/GitLab/JobVariablesAttributes");
         it('HttpResponse', () => assert.equal(response instanceof HttpResponse, true))
         it('response has json function', () => assert.equal(!!response.json, true))
         it('test Google api key response', () => assert.equal(json.status, 'REQUEST_DENIED'))
+        const res = HttpResponse.response({data: 'a'}, {status: 500, rawHeaders: ['a', 'b']})
+        it('HttpResponse status 500', () => assert.equal(res.status === 500, true))
+        it('HttpResponse is bad', () => assert.equal(HttpResponse.isGood(res), false))
     })
 
     const gitLab = new GitLab.API(new GitLab.Options({fetchMethod: GitLab.Request}));
 
+    const glerror = new GitLab.Error(gitLab, 'test')
+    await describe('GitLabError class', () => {
+        it('stack is null', () => assert.strictEqual(glerror.stack, null))
+        it('info is string', () => assert.strictEqual(typeof glerror.info, 'object'))
+    })
+
     const names = ['groups', 'Releases'];
     await describe('Dynamic response classes', () => {
         for (let v of names) {
-            v = DynamicResponse.getSingletonName(v)
+            v = GitLab.DynamicResponse.getSingletonName(v)
             const _classes = DynamicResponse.class(v)
             const singleton = new _classes[DynamicResponse.getSingletonName(v)]({})
             const list = new _classes[DynamicResponse.getSingletonName(v) + 's']([], {})

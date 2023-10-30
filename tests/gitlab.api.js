@@ -18,21 +18,13 @@ require('dotenv').config();
     const [major, minor, patch] = process.versions.node.split('.').map(Number)
     console.log('node', major, minor, patch);
 
-    const gitLab = new GitLab.API(new GitLab.Options({
+    let gitLab = new GitLab.API(new GitLab.Options({
         privateToken: process.env.GIT_TOKEN,
         projectId: process.env.GIT_PID,
-        fetchMethod: GitLab.Request // axios, fetch, node-fetch, etc...
+        fetchMethod: fetch // axios, fetch, node-fetch, etc...
     }));
 
-    // https://docs.gitlab.com/ee/api/releases/
-    gitLab.add('Releases').addMethods({
-        releases: new GitLab.Method({
-            method: 'get',
-            class: GitLab.Responses,
-            url: () => `projects/${gitLab.projectId}/releases`
-        })
-    })
-    console.log(gitLab.Releases.methods)
+
     const releases = await gitLab.Releases.releases(new GitLab.PaginateParams({page: 1, per_page: 20}));
     console.log(releases.list)
     await describe('New dynamic Releases class', () => {
@@ -62,7 +54,6 @@ require('dotenv').config();
     const pipelines = await gitLab.Pipelines.pipelines(new GitLab.PaginateParams({
         page: 1, per_page: 20, status: 'success', source: 'push',
     }));
-    console.log(pipelines.list)
     await describe('New dynamic Pipelines class', () => {
         it('Pipelines instanceof GitLab.Responses', () => {
             assert.strictEqual(pipelines instanceof GitLab.Responses, true);
@@ -70,14 +61,31 @@ require('dotenv').config();
         it('Pipelines count 20', () => {
             assert.strictEqual(pipelines.list.length, 20);
         })
-    })
+    });
 
     const pipelinelatest = await gitLab.Pipelines.latest();
-    console.log(pipelinelatest)
     await describe('New dynamic Pipelines class', () => {
         it('Pipeline instanceof GitLab.Response', () => {
             assert.strictEqual(pipelinelatest instanceof GitLab.Response, true);
         })
     })
+
+    gitLab = new GitLab.API(new GitLab.Options({
+        privateToken: 'test',
+        projectId: process.env.GIT_PID,
+        fetchMethod: GitLab.Request
+    }));
+    const apimethods = gitLab.getOwnPropertyNames();
+    for (let am of apimethods) {
+        const coremethods = gitLab[am].methods;
+        for (let m of Object.keys(coremethods)) {
+            await describe('Statement ' + am + ' of API', () => {
+                it(am + 'core method ' + m, () => {
+                    assert.strictEqual(gitLab[am][m] instanceof Object, true);
+                })
+            })
+        }
+    }
+
 
 })();

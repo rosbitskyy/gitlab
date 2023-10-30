@@ -24,8 +24,8 @@ class HttpResponse extends AbstractProperties {
 
     /**
      * @param {string|object} v
-     * @param {{statusCode:number,status:number}|https.IncomingMessage} res
-     * @return {HttpResponse|https.IncomingMessage}
+     * @param {{statusCode?:number,status?:number,rawHeaders?:string[]}|Object} res
+     * @return {HttpResponse|Object}
      */
     static response(v, res) {
         const _is = !!v && v.constructor === ''.constructor
@@ -40,7 +40,7 @@ class HttpResponse extends AbstractProperties {
     }
 
     /**
-     * @param {{statusCode?:number,status?:number}|https.IncomingMessage} res
+     * @param {{statusCode?:number,status?:number,rawHeaders?:string[]}|Object} res
      * @return {boolean}
      */
     static isGood = (res) => {
@@ -50,7 +50,7 @@ class HttpResponse extends AbstractProperties {
 
     static getHeaders(res) {
         if (res.headers) return res.headers;
-        let rv =  {}
+        let rv = {}
         let rawHeaders = res.rawHeaders || (res.res || {}).rawHeaders;
         if (res && rawHeaders && rawHeaders instanceof Array) {
             for (let i = 0; i < rawHeaders.length; i += 2) {

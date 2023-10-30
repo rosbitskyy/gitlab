@@ -20,12 +20,13 @@ declare class HttpResponse extends AbstractProperties {
 
     /**
      * @param {string|object} v
-     * @param {{statusCode?:number,status?:number}} res
+     * @param {{statusCode?:number,status?:number,rawHeaders?:string[]}} res
      * @return {HttpResponse}
      */
     static response(v: string | object, res: {
         statusCode?: number;
         status?: number;
+        rawHeaders?: string[];
     }): HttpResponse;
 
     static getHeaders(res: any): any;
