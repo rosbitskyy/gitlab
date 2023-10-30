@@ -25,6 +25,17 @@ require('dotenv').config();
         //fetchMethod: GitLab.Request // axios, fetch, node-fetch, etc...
     }));
 
+    const apimethods = gitLab.getOwnPropertyNames();
+    for (let am of apimethods) {
+        const coremethods = gitLab[am].methods;
+        await describe('Statement ' + am + ' of API', () => {
+            for (let m of Object.keys(coremethods)) {
+                it('method ' + m, () => {
+                    assert.strictEqual(gitLab[am][m] instanceof Object, true);
+                })
+            }
+        })
+    }
 
     const releases = await gitLab.Releases.releases(new GitLab.PaginateParams({page: 1, per_page: 20}));
     await describe('New dynamic Releases class', () => {
@@ -49,7 +60,6 @@ require('dotenv').config();
         })
     })
 
-    console.log(gitLab.Pipelines.methods)
     const pipelines = await gitLab.Pipelines.pipelines(new GitLab.PaginateParams({
         page: 1, per_page: 20, status: 'success', source: 'push',
     }));
@@ -68,23 +78,6 @@ require('dotenv').config();
             assert.strictEqual(pipelinelatest instanceof GitLab.Response, true);
         })
     })
-
-    gitLab = new GitLab.API(new GitLab.Options({
-        privateToken: 'test',
-        projectId: process.env.GIT_PID,
-        fetchMethod: GitLab.Request
-    }));
-    const apimethods = gitLab.getOwnPropertyNames();
-    for (let am of apimethods) {
-        const coremethods = gitLab[am].methods;
-        await describe('Statement ' + am + ' of API', () => {
-            for (let m of Object.keys(coremethods)) {
-                it('method ' + m, () => {
-                    assert.strictEqual(gitLab[am][m] instanceof Object, true);
-                })
-            }
-        })
-    }
 
 
 })();
