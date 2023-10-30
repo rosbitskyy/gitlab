@@ -21,7 +21,8 @@ require('dotenv').config();
     let gitLab = new GitLab.API(new GitLab.Options({
         privateToken: process.env.GIT_TOKEN,
         projectId: process.env.GIT_PID,
-        fetchMethod: GitLab.Request // axios, fetch, node-fetch, etc...
+        // auto config
+        //fetchMethod: GitLab.Request // axios, fetch, node-fetch, etc...
     }));
 
 
