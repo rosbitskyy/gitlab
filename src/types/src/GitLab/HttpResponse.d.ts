@@ -21,7 +21,7 @@ declare class HttpResponse extends AbstractProperties {
     /**
      * @param {string|object} v
      * @param {{statusCode:number,status:number}} res
-     * @return {HttpResponse|https.IncomingMessage}
+     * @return {HttpResponse}
      */
     static response(v: string | object, res: {
         statusCode: number;

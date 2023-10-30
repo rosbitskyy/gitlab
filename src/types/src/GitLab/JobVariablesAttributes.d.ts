@@ -2,7 +2,7 @@ export = JobVariablesAttributes;
 
 declare class JobVariablesAttributes {
     /**
-     * @type {AbstractList<AbstractKeyValue>|Array<AbstractKeyValue>}
+     * @type {AbstractList|Array<any>}
      */
     job_variables_attributes: AbstractList | Array<any>;
 
