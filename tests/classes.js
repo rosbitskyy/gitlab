@@ -39,8 +39,9 @@ const JobVariablesAttributes = require("../src/GitLab/JobVariablesAttributes");
     })
 
     const jobVariablesAttributes = new JobVariablesAttributes();
+    jobVariablesAttributes.add(new GitLab.AbstractKeyValue('a', 'b'));
     jobVariablesAttributes.add('a', 'b');
-    jobVariablesAttributes.push('b', 's')
+    jobVariablesAttributes.push('b', 's');
     await describe('JobVariablesAttributes class', () => {
         it('JobVariablesAttributes', () => assert.equal(typeof jobVariablesAttributes.toString(), 'string'))
     })
