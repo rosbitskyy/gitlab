@@ -28,8 +28,8 @@ class AbstractProperties {
     }
 
     /**
-     * @param {any} obj
-     * @return {any[]}
+     * @param {object} obj
+     * @return {string[]}
      */
     getOwnPropertyOf = (obj) => {
         let properties = new Set()

@@ -5,10 +5,10 @@ export = AbstractProperties;
 declare class AbstractProperties {
     formatDate: (d: any, lang?: string) => string;
     /**
-     * @param {any} obj
-     * @return {any[]}
+     * @param {object} obj
+     * @return {string[]}
      */
-    getOwnPropertyOf: (obj: any) => any[];
+    getOwnPropertyOf: (obj: object) => string[];
 
     /**
      * @param {Object|Array} source
