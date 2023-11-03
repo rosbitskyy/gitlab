@@ -101,7 +101,7 @@ class APICore extends AbstractProperties {
                         if (response.ok) {
                             const _t = await response.text();
                             try {
-                                return new Class(_t);
+                                return new Class(JSON.parse(_t));
                             } catch (e) {
                                 return _t;
                             }
