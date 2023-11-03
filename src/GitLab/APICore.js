@@ -99,14 +99,10 @@ class APICore extends AbstractProperties {
                         if (body) _args.push(body);
                         const response = await this.request[spec.method](..._args);
                         if (response.ok) {
-                            const _t = await response.text();
-                            try {
-                                return new Class(JSON.parse(_t));
-                            } catch (e) {
-                                return _t;
-                            }
+                            const v = await this.#getResponse(response);
+                            return !!v && v.constructor === ''.constructor ? v : new Class(v);
                         } else {
-                            const e = await response.json();
+                            const e = await this.#getResponse(response);
                             console.warn('WARNING:', JSON.stringify({...e, url}))
                             return e;
                         }
@@ -115,6 +111,15 @@ class APICore extends AbstractProperties {
                     }
                 }
             })
+        }
+    }
+
+    async #getResponse(response) {
+        const _t = await response.text();
+        try {
+            return JSON.parse(_t);
+        } catch (e) {
+            return _t;
         }
     }
 
