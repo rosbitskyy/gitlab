@@ -98,12 +98,13 @@ class APICore extends AbstractProperties {
                         const _args = [url];
                         if (body) _args.push(body);
                         const response = await this.request[spec.method](..._args);
+                        const _is = (e) => e.constructor === ''.constructor;
                         if (response.ok) {
                             const v = await this.#getResponse(response);
-                            return !!v && v.constructor === ''.constructor ? v : new Class(v);
+                            return _is(v) ? v : new Class(v);
                         } else {
                             const e = await this.#getResponse(response);
-                            console.warn('WARNING:', JSON.stringify({...e, url}))
+                            console.warn('WARNING:', ...(_is(e) ? [e, url] : [JSON.stringify({...e, url})]))
                             return e;
                         }
                     } catch (e) {
