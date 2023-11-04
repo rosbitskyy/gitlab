@@ -4,7 +4,7 @@ import Options = require("./src/GitLab/Options");
 import APICore = require("./src/GitLab/APICore");
 import MethodsObjects = require("./src/GitLab/MethodsObjects");
 import APIRequest = require("./src/GitLab/APIRequest");
-import {expectType} from 'tsd';
+import {expectNotType, expectType} from 'tsd';
 
 let options = new GitLab.Options({})
 expectType<Options>(options)
@@ -19,6 +19,6 @@ expectType<Method>(method);
 expectType<string | object | object[]>(method.url());
 MyGroups.addMethods({getGroups: method});
 expectType<any>(gitLab.MyGroups.getGroups);
-expectType<any>(gitLab.MyGroups.methods);
+expectNotType<MethodsObjects>(gitLab.MyGroups.methods);
 expectType<MethodsObjects>(MyGroups.methods);
 expectType<Function | Object>(MyGroups.request.get);
