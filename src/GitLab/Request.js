@@ -34,7 +34,7 @@ class Request {
     /**
      * @param {string} url
      * @param {object:{method,headers,body}} options
-     * @return {Promise<{ok:boolean,json:function,text:function}>}
+     * @return {Promise<HttpResponse|Response>}
      */
     #request(url, options) {
         const {body} = options;

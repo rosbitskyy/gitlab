@@ -22,7 +22,7 @@ require('dotenv').config();
         privateToken: process.env.GIT_TOKEN,
         projectId: process.env.GIT_PID,
         // auto config
-        //fetchMethod: GitLab.Request // axios, fetch, node-fetch, etc...
+        // fetchMethod: GitLab.Request // axios, fetch, node-fetch, etc...
     }));
 
     const apimethods = gitLab.getOwnPropertyNames();
