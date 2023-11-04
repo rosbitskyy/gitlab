@@ -1,6 +1,7 @@
 export = API;
 
 declare class API extends AbstractProperties {
+
     options: Options;
     debugger: {
         frame: string[];

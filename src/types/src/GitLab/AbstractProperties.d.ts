@@ -2,7 +2,11 @@ import Job = require("./Job");
 
 export = AbstractProperties;
 
-declare class AbstractProperties {
+declare class DynamicProperties {
+    [s: string]: any
+}
+
+declare class AbstractProperties extends DynamicProperties {
     formatDate: (d: any, lang?: string) => string;
     /**
      * @param {object} obj

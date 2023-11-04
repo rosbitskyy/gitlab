@@ -1,6 +1,7 @@
 import API = require("./API");
 import AbstractProperties = require("./AbstractProperties");
 import APIRequest = require("./APIRequest");
+import MethodsObjects = require("./MethodsObjects");
 
 export = APICore;
 
@@ -19,15 +20,15 @@ declare class APICore extends AbstractProperties {
      */
     constructor(api: API);
 
-    get methods(): any;
+    get methods(): MethodsObjects;
 
     /**
      * @deprecated
-     * @return {Object}
+     * @return {MethodsObjects}
      */
-    get uri(): any;
+    get uri(): MethodsObjects;
 
-    get apiUrl(): any;
+    get apiUrl(): string;
 
     /**
      * Add your own method that is not yet implemented by this api

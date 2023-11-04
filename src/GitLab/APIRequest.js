@@ -12,7 +12,10 @@ const HttpResponse = require("./HttpResponse");
 
 /** @typedef {import('../types/src/GitLab/API')} API*/
 
-class APIRequest {
+class RequestMethods {
+}
+
+class APIRequest extends RequestMethods {
 
     methods = ['get', 'head', 'delete', 'patch', 'post', 'put', 'options'];
 
@@ -21,11 +24,16 @@ class APIRequest {
      * @return {boolean}
      */
     withBody = (v) => !!v && ![this.methods[0], this.methods[1]].includes(v.toLowerCase());
+    /**
+     * @type {API}
+     */
+    api;
 
     /**
      * @param {API} api
      */
     constructor(api) {
+        super()
         this.api = api;
         this.#makeSpecification();
         this.#validate();

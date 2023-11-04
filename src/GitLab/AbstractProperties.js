@@ -8,7 +8,10 @@
  * @license Licensed under the MIT License (MIT)
  */
 
-class AbstractProperties {
+class DynamicProperties {
+}
+
+class AbstractProperties extends DynamicProperties {
     /**
      * @param {Object|Array} source
      * @param {Object|Array} target

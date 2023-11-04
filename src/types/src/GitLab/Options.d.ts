@@ -5,12 +5,12 @@ declare class Options extends AbstractProperties {
     maxRetries: number;
     privateToken: string;
     projectId: string;
-    fetchMethod: any;
+    fetchMethod: object | Function;
 
     /**
-     * @param {object:{}} options
+     * @param {object|Options} options
      */
-    constructor(options: any);
+    constructor(options: object | Options);
 
     get header(): {
         headers: {
