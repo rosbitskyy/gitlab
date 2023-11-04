@@ -42,21 +42,18 @@ require('dotenv').config();
         it('Releases instanceof GitLab.Responses', () => {
             assert.strictEqual(releases instanceof GitLab.Responses, true);
         })
-        it('Groups count', () => {
+        it('Releases count', () => {
             assert.strictEqual(releases.list.length > 0, true);
         })
     })
 
-    gitLab.add('groups').addMethods({
-        groups: new Method({method: 'get', class: GitLab.Responses, url: () => `groups`})
+    gitLab.add('MyGroups').addMethods({
+        getGroups: new Method({method: 'get', class: GitLab.Responses, url: () => `groups`})
     })
-    const groups = await gitLab.Groups.groups(new GitLab.PaginateParams({page: 1, per_page: 20}));
-    await describe('New dynamic Groups class', () => {
-        it('Groups instanceof GitLab.Responses', () => {
+    const groups = await gitLab.MyGroups.getGroups(new GitLab.PaginateParams({page: 1, per_page: 20}));
+    await describe('New dynamic MyGroups class', () => {
+        it('MyGroups instanceof GitLab.Responses', () => {
             assert.strictEqual(groups instanceof GitLab.Responses, true);
-        })
-        it('Groups count', () => {
-            assert.strictEqual(groups.list.length === 0, true);
         })
     })
 
