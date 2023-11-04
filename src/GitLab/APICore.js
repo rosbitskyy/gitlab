@@ -14,6 +14,11 @@ const APIRequest = require("./APIRequest");
 const AbstractProperties = require("./AbstractProperties");
 const Responses = require("./Responses");
 
+/** @typedef {import('../types/src/GitLab/API')} API*/
+
+/** @typedef {import('../types/src/GitLab/Method')} Method*/
+/** @typedef {import('../types/src/GitLab/MethodsObjects')} MethodsObjects*/
+
 class APICore extends AbstractProperties {
     /**
      * @type {API}
@@ -21,7 +26,7 @@ class APICore extends AbstractProperties {
     api
 
     /**
-     * @type {Object}
+     * @type {MethodsObjects}
      */
     #methods = {};
 
@@ -70,8 +75,10 @@ class APICore extends AbstractProperties {
 
     #makeSpecification() {
         const ownProperties = this.getOwnPropertyOf(this)
-        for (let key of Object.keys(this.#methods)) {
-            if (ownProperties.includes(key)) continue
+        const methodKeys = Object.keys(this.#methods);
+        for (let key of methodKeys) {
+            if (ownProperties.includes(key)) continue;
+            /** @type Method */
             const spec = this.#methods[key];
             Object.defineProperty(this, key, {
                 writable: false,

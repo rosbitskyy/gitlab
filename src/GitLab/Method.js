@@ -23,7 +23,7 @@ class Method {
     url;
 
     /**
-     * @param {object:{method:string,class:object,url:Function}} props
+     * @param {object|Method} props
      */
     constructor(props) {
         for (let key of Object.keys(props))

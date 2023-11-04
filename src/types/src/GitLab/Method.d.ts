@@ -2,7 +2,7 @@ import PaginateParams = require("./PaginateParams");
 
 export = Method;
 
-declare interface MethodProperties {
+declare class Method {
     method: string;
     class: object;
 
@@ -13,17 +13,11 @@ declare interface MethodProperties {
     url(obj: PaginateParams | object): Array<object>;
 
     url(id: string | number, body: object): any;
-}
-
-declare class Method {
-    method: string;
-    class: object;
-    url: Function
 
     /**
-     * @param {{method:string,class:object,url:Function}|MethodProperties} props
+     * @param {{method:string,class:object,url:Function}|Method} props
      */
-    constructor(props: object | MethodProperties);
+    constructor(props: object | Method);
 }
 
 //# sourceMappingURL=Method.d.ts.map

@@ -10,6 +10,8 @@
 const Request = require('./Request')
 const HttpResponse = require("./HttpResponse");
 
+/** @typedef {import('../types/src/GitLab/API')} API*/
+
 class APIRequest {
 
     methods = ['get', 'head', 'delete', 'patch', 'post', 'put', 'options'];
