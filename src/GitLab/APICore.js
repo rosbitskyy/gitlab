@@ -76,8 +76,8 @@ class APICore extends AbstractProperties {
             Object.defineProperty(this, key, {
                 writable: false,
                 /**
-                 * @return {Promise<Object|Jobs|Job|null>}
-                 * @param args - id|null, PaginateParams|null
+                 * @return {Promise<any>}
+                 * @param {null|Array<any>} args - id|PaginateParams|null, (id,{body})
                  */
                 value: async (...args) => {
                     try {

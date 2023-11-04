@@ -18,12 +18,12 @@ class Method {
      */
     class;
     /**
-     * @type {Object|Function}
+     * @type {Function}
      */
     url;
 
     /**
-     * @param {object:{method:string,class:object,url:Object|Function}} props
+     * @param {object:{method:string,class:object,url:Function}} props
      */
     constructor(props) {
         for (let key of Object.keys(props))
