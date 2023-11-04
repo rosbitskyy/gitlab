@@ -64,7 +64,7 @@ require('dotenv').config();
         it('Pipelines instanceof GitLab.Responses', () => {
             assert.strictEqual(pipelines instanceof GitLab.Responses, true);
         })
-        it('Pipelines count 20', () => {
+        it('success Pipelines count 20', () => {
             assert.strictEqual(pipelines.list.length, 20);
         })
     });
