@@ -41,7 +41,7 @@ And yes, let's start!
 
 ### Installation
 
-First install [Node.js](https://nodejs.org/uk)
+First install [Node.js](https://nodejs.org/)
 
 ```shell
 npm i gitlab-restapi
