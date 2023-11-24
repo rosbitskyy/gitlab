@@ -71,7 +71,7 @@ running, failed, success, canceled, skipped, waiting_for_resource, or manual. Al
 provided.
 
 GitLab.Options can specify your method for fetching data. 
-For nodes 18+ - this is the own node fetch, for younger versions 
+For nodes 18+ - this is the own node fetch (by default), for younger versions 
 (unless otherwise specified) - the internal mechanism
 ```javascript
 new GitLab.Options({
