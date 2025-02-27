@@ -12,7 +12,9 @@
 const Response = require("./Response");
 
 /**
- * Just example of response: https://docs.gitlab.com/ee/api/jobs.html#list-project-jobs
+ * Represents a job entity and its various statuses.
+ * Extends the Response class and provides additional methods and properties
+ * related to the state and lifecycle of a job.
  */
 class Job extends Response {
 

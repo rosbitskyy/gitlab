@@ -15,13 +15,25 @@ const HttpResponse = require("./HttpResponse");
 class RequestMethods {
 }
 
+/**
+ * The `APIRequest` class provides structured methods for making HTTP requests to a given API,
+ * leveraging various HTTP methods such as GET, POST, DELETE, etc.
+ * It integrates with a specified API object and ensures compatibility across different environments for making requests.
+ *
+ * This class inherits from the `RequestMethods` base class and dynamically generates methods for supported HTTP request types.
+ */
 class APIRequest extends RequestMethods {
 
     methods = ['get', 'head', 'delete', 'patch', 'post', 'put', 'options'];
 
     /**
-     * @param {string} v
-     * @return {boolean}
+     * Determines whether a given parameter is valid and does not match
+     * specific method names in a case-insensitive manner.
+     *
+     * @param {string} v - The parameter to be checked.
+     * @returns {boolean} Returns `true` if the parameter is valid
+     *                    and does not match any of the method names,
+     *                    otherwise returns `false`.
      */
     withBody = (v) => !!v && ![this.methods[0], this.methods[1]].includes(v.toLowerCase());
     /**
@@ -39,6 +51,13 @@ class APIRequest extends RequestMethods {
         this.#validate();
     }
 
+    /**
+     * Validates the environment and assigns the appropriate fetch method
+     * to the API options if not already set. The method checks the Node.js
+     * version and sets the fetch method accordingly.
+     *
+     * @return {void} Does not return a value.
+     */
     #validate() {
         // const [major, minor, patch] = process.versions.node.split('.').map(Number)
         const [major] = process.versions.node.split('.').map(Number)
@@ -48,6 +67,12 @@ class APIRequest extends RequestMethods {
         }
     }
 
+    /**
+     * Creates and initializes the API method specifications dynamically based on the available methods.
+     * Binds HTTP methods (like GET, POST, etc.) to the instance and wraps them with an execution logic.
+     *
+     * @return {void}
+     */
     #makeSpecification() {
         /**
          * @param {string} url
@@ -69,9 +94,12 @@ class APIRequest extends RequestMethods {
     }
 
     /**
-     * @param {string} url
-     * @param {object} opts
-     * @return {Promise<Object|HttpResponse|null>}
+     * Sends a request to the specified URL with the provided options.
+     *
+     * @param {string} url - The URL to which the request is sent.
+     * @param {Object} opts - The options for the request, such as headers and method.
+     * @return {Promise<Object>} A promise that resolves to the response object.
+     * The response can vary depending on the fetch library used (e.g., fetch, node-fetch, axios, or other libraries).
      */
     async #request(url, opts) {
         const res = await this.api.options.fetchMethod(url, opts);

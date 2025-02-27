@@ -1,11 +1,6 @@
 /**
- * =========================================================
- *  🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 GitLab API 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦 🇺🇦
- * =========================================================
- * Copyright (c) 2019-2023
- * @Author: Rosbitskyy Ruslan
- * @email: rosbitskyy@gmail.com
- * @license Licensed under the MIT License (MIT)
+ * Represents an abstract key-value pair.
+ * This class stores a key and its corresponding value, which can be of various data types.
  */
 
 
@@ -31,6 +26,11 @@ class AbstractKeyValue {
     }
 
     /* istanbul ignore next */
+    /**
+     * Retrieves an object with a single key-value pair based on the instance's key and value.
+     *
+     * @return {Object} An object containing the key-value pair where the key is derived from `this.key` and the value is derived from `this.value`.
+     */
     get() {
         return {[this.key]: this.value};
     }

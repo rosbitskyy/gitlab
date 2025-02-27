@@ -2,6 +2,10 @@ const AbstractProperties = require("./AbstractProperties");
 const AbstractList = require("./AbstractList");
 const Response = require("./Response");
 
+/**
+ * The Responses class extends AbstractProperties to handle a collection of response-related data.
+ * It utilizes an internal private list to manage and filter response objects effectively.
+ */
 class Responses extends AbstractProperties {
     /**
      * @type {[AbstractList]}

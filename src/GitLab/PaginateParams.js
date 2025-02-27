@@ -12,6 +12,10 @@
 const AbstractProperties = require("./AbstractProperties");
 const AbstractList = require("./AbstractList");
 
+/**
+ * Represents parameters for pagination with additional customizable options.
+ * Extends AbstractProperties to inherit property setting functionality.
+ */
 class PaginateParams extends AbstractProperties {
     page = 1;
     per_page = 20;
@@ -29,6 +33,14 @@ class PaginateParams extends AbstractProperties {
         this.setProperties(params, this, false)
     }
 
+    /**
+     * Converts the properties of the current object to a URL query string format.
+     * Iterates through the object's keys and appends key-value pairs to the result.
+     * Arrays are handled by iterating their values and appending multiple key-value pairs
+     * with the same key but indexed with square brackets.
+     *
+     * @return {string} A URL query string representation of the object's properties.
+     */
     toString() {
         let rv = '?';
         const prefix = () => rv.length > 1 ? '&' : '';

@@ -8,6 +8,11 @@
  * @license Licensed under the MIT License (MIT)
  */
 
+/**
+ * The AbstractList class extends the native Array class, providing additional
+ * functionality for managing and querying elements. It can be initialized
+ * optionally with an array or remain empty.
+ */
 class AbstractList extends Array {
     /**
      * @param {Array|null} v

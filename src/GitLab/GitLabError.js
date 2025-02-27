@@ -9,6 +9,10 @@
  */
 
 
+/**
+ * Custom error class for handling errors related to GitLab operations.
+ * Extends the native JavaScript Error class.
+ */
 class GitLabError extends Error {
     #api
 
@@ -25,6 +29,14 @@ class GitLabError extends Error {
         this.#stack()
     }
 
+    /**
+     * Analyzes the stack trace of an error to identify the relevant frames and line of execution
+     * while filtering out frames related to specified modules or directories.
+     *
+     * @return {Object} An object containing:
+     *   - `frame`: An array of stack frames that do not include references to the specified lookup modules or directories.
+     *   - `line`: A string representing the specific stack trace line derived from filtered frames.
+     */
     static debugger() {
         const lookup = ['process', 'modules', 'internal', 'GitLabAPI'];
         let e = new Error();
@@ -34,6 +46,13 @@ class GitLabError extends Error {
         return {frame, line}
     }
 
+    /**
+     * Processes and extracts the second line of the stack trace,
+     * trims unnecessary whitespace, and augments information
+     * with debug frame data. Resets the stack property to null after processing.
+     *
+     * @return {void} No return value.
+     */
     #stack() {
         try {
             const name = (this.stack ? this.stack.split("\n")[1] : '').trim();

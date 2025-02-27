@@ -11,6 +11,9 @@
 
 const AbstractProperties = require("./AbstractProperties");
 
+/**
+ * The Options class extends AbstractProperties and is used to define and manage configuration options for interacting with GitLab API.
+ */
 class Options extends AbstractProperties {
     apiUrl = 'https://gitlab.com/api/v4/';
     maxRetries = 5;
@@ -27,6 +30,13 @@ class Options extends AbstractProperties {
         this.setProperties(options, this)
     }
 
+    /**
+     * Retrieves the HTTP headers required for making requests, including
+     * the content type and authorization token.
+     *
+     * @return {Object} An object containing the HTTP headers with
+     *         'Content-Type' and 'PRIVATE-TOKEN' keys.
+     */
     get header() {
         return {headers: {'Content-Type': 'application/json', 'PRIVATE-TOKEN': this.privateToken}}
     }

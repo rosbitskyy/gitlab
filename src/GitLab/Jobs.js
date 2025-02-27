@@ -11,6 +11,13 @@
 const Responses = require("./Responses");
 const Job = require("./Job");
 
+/**
+ * Represents a collection of Job instances. This class extends the Responses superclass and is used
+ * for managing a list of job-related items.
+ *
+ * @class Jobs
+ * @extends Responses
+ */
 class Jobs extends Responses {
     /**
      * @param {[]|AbstractList} v

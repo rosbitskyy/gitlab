@@ -8,6 +8,9 @@
  * @license Licensed under the MIT License (MIT)
  */
 
+/**
+ * Represents a Method with associated attributes like method, class, and url.
+ */
 class Method {
     /**
      * @type {string}

@@ -30,18 +30,29 @@ class APICore extends AbstractProperties {
      */
     #methods = {};
 
+    /**
+     * Retrieves the private methods associated with the instance.
+     *
+     * @return {Array|Object} The private methods stored in this.#methods.
+     */
     get methods() {
         return this.#methods
     }
 
     /**
-     * @deprecated
-     * @return {Object}
+     * Retrieves the private property `#methods`.
+     *
+     * @return {any} The value stored in the private `#methods` property.
      */
     get uri() {
         return this.#methods
     }
 
+    /**
+     * Retrieves the API URL from the current configuration options.
+     *
+     * @return {string} The API URL as defined in the options.
+     */
     get apiUrl() {
         return this.api.options.apiUrl;
     };
@@ -61,8 +72,12 @@ class APICore extends AbstractProperties {
     }
 
     /**
-     * Add your own method that is not yet implemented by this api
-     * @param {Object} v
+     * Adds methods to the internal methods collection if they meet specific criteria.
+     *
+     * @param {Object} v - An object containing method configurations to be added. Each property should define
+     *                     a method with attributes such as 'method', 'class', and 'url'.
+     *
+     * @return {void} This method does not return a value.
      */
     addMethods(v) {
         if (!v || v.constructor !== {}.constructor) return;
@@ -73,6 +88,12 @@ class APICore extends AbstractProperties {
         this.#makeSpecification()
     }
 
+    /**
+     * Dynamically defines methods on the current object based on specifications stored in the `#methods` property.
+     * The methods are added as non-writable properties of the object and are executed through asynchronous calls.
+     *
+     * @return {void} This method does not return a value. Instead, it dynamically creates and attaches methods to the current object.
+     */
     #makeSpecification() {
         const ownProperties = this.getOwnPropertyOf(this)
         const methodKeys = Object.keys(this.#methods);

@@ -8,6 +8,10 @@
  * @license Licensed under the MIT License (MIT)
  */
 
+"use strict";
+
+require('./Prototypes'); // 2025-02-27 - https://github.com/rosbitskyy/gitlab/issues/1#issue-2010858427
+
 const AbstractProperties = require("./AbstractProperties");
 const Options = require("./Options");
 const APICore = require("./APICore");
@@ -18,16 +22,32 @@ const Method = require("./Method");
 const Response = require("./Response");
 const Responses = require("./Responses");
 
+/**
+ * Class representing an API interface for interacting with GitLab resources.
+ * Provides methods for various API operations including jobs, pipelines, and releases.
+ * Extends `AbstractProperties` to handle properties and options setup.
+ */
 class API extends AbstractProperties {
 
     options = new Options({})
 
-    getOwnPropertyNames() {
-        return Object.getOwnPropertyNames(this).filter(it => this[it] instanceof APICore)
-    }
-
+    /**
+     * Retrieves the project ID from the options.
+     *
+     * @return {string} The project ID.
+     */
     get projectId() {
         return this.options.projectId;
+    }
+
+    /**
+     * Retrieves the names of own properties of the current object whose values are instances of APICore.
+     *
+     * @return {string[]} An array containing the names of the own properties of the object
+     *                    that are instances of APICore.
+     */
+    getOwnPropertyNames() {
+        return Object.getOwnPropertyNames(this).filter(it => this[it] instanceof APICore)
     }
 
     /**
@@ -41,17 +61,24 @@ class API extends AbstractProperties {
     }
 
     /**
-     * @param {PropertyKey} apiName
-     * @return {APICore}
+     * Adds a new API core to the current object property if it does not already exist.
+     *
+     * @param {string} apiName - The name of the API to be added. If not provided, an empty string is used.
+     * @return {APICore} Returns the newly created APICore instance or the existing one if already present.
      */
     add(apiName) {
-        apiName = apiName.capitalize();
+        apiName = String(apiName || '').capitalize(); // 27-02-2025
         if (this.hasOwnProperty(apiName)) return this[apiName];
         this[apiName] = new APICore(this);
         return this[apiName];
     }
 
     // construct Jobs API by default https://docs.gitlab.com/ee/api/jobs.html
+    /**
+     * Configures default API specifications by adding various resource methods for Jobs, Pipelines, and Releases.
+     *
+     * @return {void} No return value. Sets up methods for interacting with API resources such as Jobs, Pipelines, and Releases.
+     */
     #defautlSpecification() {
 
         this.add('Jobs').addMethods({
