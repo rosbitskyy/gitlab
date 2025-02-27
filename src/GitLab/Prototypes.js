@@ -10,37 +10,37 @@
 
 "use strict";
 
-const defineObjectPrototype = (constructor, methodName, method) => {
-    // Перевірка, чи є переданий параметр конструктором (функцією)
-    if (typeof constructor !== 'function') {
-        throw new Error('Provided object must be a constructor function.');
-    }
-    // Перевірка, чи передана назва методу є рядком
-    if (typeof methodName !== 'string') {
-        throw new Error('Cannot define method. Method name must be a string.');
-    }
-    // Перевірка, чи переданий метод є функцією
-    if (typeof method !== 'function') {
-        throw new Error('Cannot define method. Provided method is not a function.');
-    }
+const ERRORS = {
+    INVALID_CONSTRUCTOR: 'Provided object must be a constructor function.',
+    INVALID_METHOD_NAME: 'Cannot define method. Method name must be a string.',
+    INVALID_METHOD: 'Cannot define method. Provided method is not a function.',
+};
 
-    // Доступ до прототипу конструктора
-    const prototype = constructor.prototype;
-
-    // Перевірка, чи метод вже існує
-    if (!prototype.hasOwnProperty(methodName)) {
-        Object.defineProperty(prototype, methodName, {
-            value: method,
-            writable: false,
-            configurable: true,
-            enumerable: false, // метод не буде видно при ітерації через Object.keys
-        });
-        return true; // Успішне додавання
-    } else {
-        return false; // Метод вже існує
+const checkType = (value, type, errorMessage) => {
+    if (typeof value !== type) {
+        throw new Error(errorMessage);
     }
 };
 
-defineObjectPrototype(String, 'capitalize', function () {
+const addMethodToPrototype = (targetConstructor, methodKey, methodDefinition) => {
+    checkType(targetConstructor, 'function', ERRORS.INVALID_CONSTRUCTOR);
+    checkType(methodKey, 'string', ERRORS.INVALID_METHOD_NAME);
+    checkType(methodDefinition, 'function', ERRORS.INVALID_METHOD);
+
+    const prototype = targetConstructor.prototype;
+
+    if (!prototype.hasOwnProperty(methodKey)) {
+        Object.defineProperty(prototype, methodKey, {
+            value: methodDefinition,
+            writable: false,
+            configurable: true,
+            enumerable: false,
+        });
+        return true;
+    }
+    return false;
+};
+
+addMethodToPrototype(String, 'capitalize', function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
 });
